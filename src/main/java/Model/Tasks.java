@@ -1,6 +1,8 @@
 package Model;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -85,22 +87,30 @@ public class Tasks {
 
 
       public static SortedMap<Date, Set<Task>> calendar (Iterable < Task > tasks, Date start, Date end){
-          Date forKey;
+          Date forKey = null;
           TreeMap<Date, Set<Task>> calendar = new TreeMap<>();
-
+SimpleDateFormat formatKey = new SimpleDateFormat();
+          formatKey.applyPattern("dd.MM.yyyy");
+           HashMap<String,Date> days = new HashMap();
+          String day;
           for (Task task : Tasks.incoming(tasks, start, end)) {
               if (task != null) {
-                  forKey = new Date(task.getTime().getTime());
+               day = formatKey.format(new Date(task.getTime().getTime()));
+                if (days.containsKey(day)) {
 
 
-                  if (calendar.containsKey(forKey))
-                      calendar.get(forKey).add(task);
+                    calendar.get(days.get(day)).add(task);
+                }
+
                   else
-                      calendar.put(forKey, new LinkedHashSet<Task>());
+                  forKey = new Date(task.getTime().getTime());
+                  calendar.put(forKey, new LinkedHashSet<Task>());
                   calendar.get(forKey).add(task);
+                  days.put(day, new Date(task.getTime().getTime()));
               }
 
           }
+          System.out.println(days);
           return calendar;
       }
 

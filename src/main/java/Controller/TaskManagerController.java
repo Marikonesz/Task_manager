@@ -31,6 +31,12 @@ public class TaskManagerController {
 
     public static void main(String[] args) {
 
+ArrayTaskList k = new ArrayTaskList();
+        for (int i = 0; i < 60; i++) {
+            k.add(new Task("task "+ i,new Date(System.currentTimeMillis()+1000000*i)));
+        }
+TaskIO.writeBinary(k, new File("filetasks"));
+
 
 
         NotfyController notfy = new NotfyController();
@@ -146,7 +152,7 @@ public class TaskManagerController {
         @Override
         public void actionPerformed(ActionEvent e) {
             modelCalendarCreater();
-            mainWindow.paintPanel(new AllTaskListPanel(calendarModel));
+            mainWindow.paintPanel(new CalendarPanel(calendarModel));
         }
     }
 
@@ -194,10 +200,17 @@ public class TaskManagerController {
 //                if (task!=null&task.getEnd().before(current) || task.getTime().before(current))
 //                    taskList.remove(task);
 //            }
-            System.out.println(taskList);
+
+            ArrayTaskList listToWrite = new ArrayTaskList();
+            for (Task task: taskList)
+            {
+                if (task!=null)
+                    listToWrite.add(task);
+            }
+
             File file = new File("filetasks");
             file.delete();
-            TaskIO.writeBinary(taskList, file);
+            TaskIO.writeBinary(listToWrite, file);
             System.exit(0);
         }
 

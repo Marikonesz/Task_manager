@@ -78,7 +78,7 @@ public class ArrayTaskList extends TaskList {
                 }
             }
         }
-        for (int j = startCopy + 1; j < intermediateArr.length; j++) {
+        for (int j = startCopy ; j < intermediateArr.length; j++) {
             intermediateArr[j] = arrayTaskList[j + 1];
         }
 
@@ -102,7 +102,7 @@ public class ArrayTaskList extends TaskList {
         ArrayTaskList tasks = (ArrayTaskList) o;
 
         if (size != tasks.size) return false;
-        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+
         return Arrays.equals(arrayTaskList, tasks.arrayTaskList);
 
     }

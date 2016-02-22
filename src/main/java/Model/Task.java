@@ -54,7 +54,7 @@ public  class Task implements Cloneable,Serializable{
     }
 
     public Date getTime() {
-        if (start.getTime() == 0)
+        if (start.getTime() == 0||start==null)
             return time;
         else
             return start;
