@@ -28,6 +28,7 @@ public class NotfyController extends Thread
                // Tasks.incoming(TaskManagerController.taskList, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis() + 10000));
                 System.out.println(new Date(System.currentTimeMillis()).toString());
 for(Task task : TaskManagerController.taskList)
+
                  task.nextTimeAfter(new Date(System.currentTimeMillis()));
 
 

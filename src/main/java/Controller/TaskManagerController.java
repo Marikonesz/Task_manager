@@ -32,13 +32,12 @@ public class TaskManagerController {
     public static void main(String[] args) {
 
 
+
         NotfyController notfy = new NotfyController();
         TaskIO.readBinary(taskList, new File("filetasks"));
         notfy.start();
         logger.warn("taskManager Started");
         modelCreater();
-
-
         logger.warn("notify system started");
 
         mainWindow.paintPanel(new MainPanel());
@@ -190,11 +189,12 @@ public class TaskManagerController {
 
         @Override
         public void windowClosing(WindowEvent e) {
-            Date current = new Date(System.currentTimeMillis());
-            for (Task task : taskList) {
-                if (task.getEnd().before(current) && task.getTime().before(current))
-                    taskList.remove(task);
-            }
+//            Date current = new Date(System.currentTimeMillis());
+//            for (Task task : taskList) {
+//                if (task!=null&task.getEnd().before(current) || task.getTime().before(current))
+//                    taskList.remove(task);
+//            }
+            System.out.println(taskList);
             File file = new File("filetasks");
             file.delete();
             TaskIO.writeBinary(taskList, file);
@@ -258,8 +258,10 @@ public class TaskManagerController {
 
     private void modelCalendarCreater() {
         calendarModel = new DefaultListModel<>();
-        Date from = new Date(System.currentTimeMillis());
+        Date from = new Date(System.currentTimeMillis()-86400000);
         Date to = new Date(System.currentTimeMillis() + 86400000 * 7);
+        System.out.println(from +"   "+to);
+
         onWeek = Tasks.calendar(taskList, from, to);
         for (Map.Entry entry : onWeek.entrySet()) {
             calendarModel.addElement(entry);

@@ -17,18 +17,20 @@ public  class TaskIO  {
 try{
           writer.writeInt(tasks.size());
       for (Task task : tasks) {
-          writer.writeInt(task.getTitle().length());
-          writer.writeUTF(task.getTitle());
-          if (task.isActive())
-              writer.writeInt(1);
-          else writer.writeInt(0);
-          writer.writeLong(task.getInterval().toMillis());
-          if (task.isRepeated()) {
-              writer.writeLong(task.getStart().getTime());
-              writer.writeLong(task.getEnd().getTime());
-          } else
-              writer.writeLong(task.getTime().getTime());
+          if (task!= null) {
+              writer.writeInt(task.getTitle().length());
+              writer.writeUTF(task.getTitle());
 
+              if (task.isActive())
+                  writer.writeInt(1);
+              else writer.writeInt(0);
+              writer.writeLong(task.getInterval().toMillis());
+              if (task.isRepeated()) {
+                  writer.writeLong(task.getStart().getTime());
+                  writer.writeLong(task.getEnd().getTime());
+              } else
+                  writer.writeLong(task.getTime().getTime());
+          }
       }
       }catch (IOException e) {
     e.printStackTrace();

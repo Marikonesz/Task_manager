@@ -124,11 +124,11 @@ public  class Task implements Cloneable,Serializable{
 
     }
 
-  public   Date nextTimeAfter(Date current) {
+  public   long nextTimeAfter(Date current) {
       // if (active) {
            if (time.getTime() > 0 && current.before(time))
 
-               return time;
+               return time.getTime();
            else {
                long startAfterCurrent = -1;
                for (long i = start.getTime(); i <= end.getTime(); i = i + interval.toMillis()) {
@@ -141,7 +141,7 @@ public  class Task implements Cloneable,Serializable{
 
 
                }
-               return new Date(startAfterCurrent);
+               return (startAfterCurrent);
            }
 
 
