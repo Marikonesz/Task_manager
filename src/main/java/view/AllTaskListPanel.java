@@ -26,7 +26,7 @@ allTasksList.addListSelectionListener(new TaskManagerController().new TaskListSe
         allTasksList.setLayoutOrientation(JList.VERTICAL);
 
  JScrollPane taskScrollList = new JScrollPane(allTasksList);
-        taskScrollList.setPreferredSize(new Dimension(300, 400));
+        taskScrollList.setPreferredSize(new Dimension(300, 500));
 
         this.add(taskScrollList);
     }

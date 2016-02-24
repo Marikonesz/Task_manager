@@ -18,7 +18,7 @@ public class CalendarPanel extends JPanel {
         CalendarList.setLayoutOrientation(JList.VERTICAL);
 
         JScrollPane taskScrollList = new JScrollPane(CalendarList);
-        taskScrollList.setPreferredSize(new Dimension(300, 400));
+        taskScrollList.setPreferredSize(new Dimension(300,500 ));
 
         this.add(taskScrollList);
     }

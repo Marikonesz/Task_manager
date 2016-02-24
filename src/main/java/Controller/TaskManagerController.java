@@ -18,35 +18,37 @@ import org.apache.log4j.Logger;
  * Created by васыль on 02.02.2016.
  */
 
-public class TaskManagerController {
+public class TaskManagerController  implements Monitor{
     final static Logger logger = Logger.getLogger(TaskManagerController.class);
 
     static TaskManagerJFrame mainWindow = new TaskManagerJFrame();
     public static TaskList taskList = new ArrayTaskList();
     public static SortedMap<Date, Set<Task>> onWeek = new TreeMap();
-    private static Task task;
+    public static Task task;
     public static DefaultListModel<Task> model;
     public static DefaultListModel<Map.Entry<Date, Set<Task>>> calendarModel;
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-ArrayTaskList k = new ArrayTaskList();
+
+        ArrayTaskList k = new ArrayTaskList();
         for (int i = 0; i < 60; i++) {
-            k.add(new Task("task "+ i,new Date(System.currentTimeMillis()+1000000*i)));
+            k.add(new Task("task " + i, new Date(System.currentTimeMillis() + 100000 * i)));
         }
-TaskIO.writeBinary(k, new File("filetasks"));
-
+        TaskIO.writeBinary(k, new File("filetasks"));
 
 
         NotfyController notfy = new NotfyController();
         TaskIO.readBinary(taskList, new File("filetasks"));
-        notfy.start();
+task = taskList.getTask(0);
         logger.warn("taskManager Started");
         modelCreater();
-        logger.warn("notify system started");
+
 
         mainWindow.paintPanel(new MainPanel());
+        notfy.start();
+
 
 
     }

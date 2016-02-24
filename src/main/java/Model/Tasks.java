@@ -100,6 +100,7 @@ SimpleDateFormat formatKey = new SimpleDateFormat();
 
 
                     calendar.get(days.get(day)).add(task);
+                    System.out.println(day);
                 }
 
                   else
