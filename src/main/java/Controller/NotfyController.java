@@ -34,7 +34,7 @@ public class NotfyController extends Thread implements Monitor
 for(Task task : list) {
     System.out.println(task);
     if (task != null) {
-        nextDate = task.nextTimeAfter(new Date(System.currentTimeMillis()));
+        nextDate = task.nextTimeAfter(new Date(System.currentTimeMillis())).getTime();
         nextTasks.put(nextDate, task);
 
     }

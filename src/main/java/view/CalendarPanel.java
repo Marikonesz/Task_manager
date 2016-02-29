@@ -14,7 +14,7 @@ public class CalendarPanel extends JPanel {
     public CalendarPanel(DefaultListModel model) {
 
         CalendarList = new JList(model);
-        CalendarList.addListSelectionListener(new TaskManagerController().new TaskListSelectionListener());
+        CalendarList.addListSelectionListener(new TaskManagerController().new CalendarSelectionListener());
         CalendarList.setLayoutOrientation(JList.VERTICAL);
 
         JScrollPane taskScrollList = new JScrollPane(CalendarList);

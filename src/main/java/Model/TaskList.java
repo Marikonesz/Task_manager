@@ -19,14 +19,14 @@ public abstract class TaskList implements Iterable<Task>,Cloneable,Serializable 
     public Task[] incoming(Date from, Date to) {
         int incomingSize = 0;
         for (int i = 0; i < size(); i++) {
-            if (getTask(i).nextTimeAfter(from) != -1 && getTask(i).nextTimeAfter(from) <= to.getTime()) {
+            if (getTask(i).nextTimeAfter(from).getTime() != -1 && getTask(i).nextTimeAfter(from).getTime() <= to.getTime()) {
                 incomingSize++;
             }
         }
         Task[] tasks = new Task[incomingSize];
         incomingSize = 0;
         for (int i = 0; i < size(); i++) {
-            if (getTask(i).nextTimeAfter(from) != -1 && getTask(i).nextTimeAfter(from) <= to.getTime()) {
+            if (getTask(i).nextTimeAfter(from).getTime() != -1 && getTask(i).nextTimeAfter(from).getTime() <= to.getTime()) {
                 tasks[incomingSize] = getTask(i);
                 incomingSize++;
             }
