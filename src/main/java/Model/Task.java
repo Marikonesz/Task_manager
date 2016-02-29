@@ -68,10 +68,10 @@ public  class Task implements Cloneable,Serializable{
         this.start =  new Date(0);
     }
 
-    void setTime(Date start, Date end, Date interval) {
+   public void setTime(Date start, Date end, Duration interval) {
         this.start = start;
         this.end = end;
-        this.interval = Duration.ofMillis(0);
+        this.interval = interval;
         this.time = new Date(0);
     }
 

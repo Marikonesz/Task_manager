@@ -4,15 +4,15 @@ package Controller;
 
 import Model.ArrayTaskList;
 import Model.Task;
+import Model.TaskIO;
 import Model.Tasks;
+import com.sun.org.apache.bcel.internal.generic.DCMPG;
 import org.apache.log4j.Logger;
 import view.TaskManagerJFrame;
 
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.TreeMap;
+import java.io.File;
+import java.util.*;
 
 
 /**
@@ -21,7 +21,7 @@ import java.util.TreeMap;
 public class NotfyController extends Thread implements Monitor
 {
     final static Logger logger = Logger.getLogger(NotfyController.class);
-    ArrayTaskList list;
+    ArrayTaskList list = new ArrayTaskList();
     TreeMap<Long,Task> nextTasks = new TreeMap<>();
     Long nextDate;
     @Override
@@ -29,27 +29,17 @@ public class NotfyController extends Thread implements Monitor
         logger.warn("notify system started");
 
             while(true) {
-       list = (ArrayTaskList) Tasks.incoming(TaskManagerController.taskList, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis() + 6000000));
-                System.out.println(list);
-for(Task task : list) {
-    System.out.println(task);
-    if (task != null) {
-        nextDate = task.nextTimeAfter(new Date(System.currentTimeMillis())).getTime();
-        nextTasks.put(nextDate, task);
+                TaskIO.readBinary(list, new File("filetasks"));
+  //       ArrayList<Task> incomingTasks = (ArrayList) Tasks.incoming(TaskManagerController.taskList, new Date(), new Date(System.currentTimeMillis() + 6000000));
+                System.out.println("");
 
-    }
-}
-                TaskManagerJFrame.noticatonField.setText("qwerty");
-              //  nextTasks.get(nextTasks.firstKey()).getTitle()
-                logger.warn("owo");
                 try {
-                    monitor.notify();
-
-                    sleep(60000);
-
+                    sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
+
             }
             }
        }

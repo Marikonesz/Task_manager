@@ -159,13 +159,16 @@ MainPanel.setFistList(true);
                 if (taskList.getTask(i).equals(task)) {
 
                     taskList.getTask(i).setTitle(TaskPanel.title);
-                    taskList.getTask(i).setTime(TaskPanel.time);
+
                     taskList.getTask(i).setActive(TaskPanel.active);
-                    if(task.isRepeated())
+                    if(TaskPanel.interval.toMillis()!= 0)
                     {
-                        taskList.getTask(i).setEnd(TaskPanel.end);
-                        taskList.getTask(i).setInterval(TaskPanel.interval);
+                        taskList.getTask(i).setTime(TaskPanel.time,TaskPanel.end,TaskPanel.interval);
                     }
+                    else
+                        taskList.getTask(i).setTime(TaskPanel.time);
+                    System.out.println(TaskPanel.interval);
+                    System.out.println(taskList.getTask(i).getInterval());
                     break;
                 }
             }

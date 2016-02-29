@@ -24,7 +24,7 @@ public class TaskPanel extends JPanel {
     private static JTextField minutes;
     public static String title;
     public static Date end;
-    public static Duration interval;
+    public static Duration interval = Duration.ofMillis(0);
     public static Date time;
     public static boolean active;
 
@@ -88,6 +88,10 @@ public class TaskPanel extends JPanel {
         intervalPanel =  new JPanel();
         hours = new JTextField(2);
         minutes = new JTextField(2);
+        if (hours.getText().equals(""))
+            hours.setText("0");
+        if (minutes.getText().equals(""))
+            minutes.setText("0");
         intervalPanel.add(hours);
         intervalPanel.add(new JLabel("hours"));
         intervalPanel.add(minutes);
@@ -119,10 +123,13 @@ public class TaskPanel extends JPanel {
     }
 
     public  static void initializeParemeters() {
+
         title = fieldTitleTask.getText();
         end = fieldEndTask.getDate();
-                 interval = Duration.ofHours(Long.parseLong(hours.getText())).plusMinutes(Long.parseLong(minutes.getText()));
-                time = fieldTimeTask.getDate();
+        time = fieldTimeTask.getDate();
+        time = fieldTimeTask.getDate();
+        interval = Duration.ofHours(Long.parseLong(hours.getText())).plusMinutes(Long.parseLong(minutes.getText()));
+        System.out.println(interval);
 
     }
 }
