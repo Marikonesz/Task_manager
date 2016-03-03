@@ -28,35 +28,6 @@ public class TaskPanel extends JPanel {
     public static Date time;
     public static boolean active;
 
-//    public TaskPanel() {
-//        this.setLayout(new GridLayout(6, 2, 5, 30));
-//        JLabel lableTitleTask = new JLabel("Task");
-//        JTextField fieldTitleTask = new JTextField(30);
-//
-//        JLabel lableTimeTask = new JLabel("time");
-//        JTextField fieldTimeTask = new JTextField(30);
-//
-//
-//        JLabel lableEndTask = new JLabel("end");
-//        JTextField fieldEndTask = new JTextField(30);
-//
-//        JLabel lableintervalTask = new JLabel("end");
-//        JTextField fieldIntervalTask = new JTextField(20);
-//        fieldIntervalTask.setEditable(false);
-//
-//        this.add(lableTitleTask);
-//        this.add(fieldTitleTask);
-//
-//        this.add(lableTimeTask);
-//        this.add(fieldTimeTask);
-//        this.add(lableEndTask);
-//        this.add(fieldEndTask);
-//        this.add(lableintervalTask);
-//        this.add(fieldIntervalTask);
-//
-//    }
-
-
     public TaskPanel(Task task) {
         this.setSize(200, 600);
         boolean onOff = task.isActive();
@@ -70,15 +41,12 @@ public class TaskPanel extends JPanel {
         fieldTimeTask = new JDateChooser();
 
         fieldTimeTask.setDate(task.getTime());
-//        JLabel intervalTask = new JLabel("start");
-//        JTextField fieldStartTask = new JTextField(10);
-//        fieldStartTask.setEditable(false);
-//        fieldStartTask.setText(task.getStart().toString());
+
         lableEndTask = new JLabel("   end");
          fieldEndTask = new JDateChooser();
 
         fieldEndTask.setDate(task.getEnd());
-        JLabel lableintervalTask = new JLabel("end");
+
 
         JButton deleteTaskButton = new JButton("delete");
         deleteTaskButton.addActionListener(new TaskManagerController().new RemoveTaskButtonListener());
@@ -88,10 +56,14 @@ public class TaskPanel extends JPanel {
         intervalPanel =  new JPanel();
         hours = new JTextField(2);
         minutes = new JTextField(2);
-        if (hours.getText().equals(""))
+        if (!task.isRepeated())
             hours.setText("0");
-        if (minutes.getText().equals(""))
+        else
+        hours.setText("" + task.getInterval().getSeconds()/3600);
+        if (!task.isRepeated())
             minutes.setText("0");
+        else
+        minutes.setText("" + (task.getInterval().getSeconds()%3600)/60);
         intervalPanel.add(hours);
         intervalPanel.add(new JLabel("hours"));
         intervalPanel.add(minutes);
@@ -129,13 +101,7 @@ public class TaskPanel extends JPanel {
         time = fieldTimeTask.getDate();
         time = fieldTimeTask.getDate();
         interval = Duration.ofHours(Long.parseLong(hours.getText())).plusMinutes(Long.parseLong(minutes.getText()));
-        System.out.println(interval);
+
 
     }
 }
-//        this.add(lableStartTask);
-//        this.add(fieldStartTask);
-//this.add(deleteTaskButton);
-// this.add(changeTaskButton);
-//        this.add(lableintervalTask);
-//        this.add(fieldIntervalTask);

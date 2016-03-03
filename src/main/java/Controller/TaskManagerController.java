@@ -17,10 +17,10 @@ import org.apache.log4j.Logger;
  * Created by васыль on 02.02.2016.
  */
 
-public class TaskManagerController  implements Monitor {
+public class TaskManagerController   {
     final static Logger logger = Logger.getLogger(TaskManagerController.class);
 
-    static TaskManagerJFrame mainWindow = new TaskManagerJFrame();
+   public static TaskManagerJFrame mainWindow = new TaskManagerJFrame();
     public static TaskList taskList = new ArrayTaskList();
     public static SortedMap<Date, Set<Task>> onWeek = new TreeMap();
     public static Task task;
@@ -221,33 +221,14 @@ MainPanel.setFistList(true);
 
     }
 
-    public class CalendarListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            modelCalendarCreater();
-            mainWindow.paintPanel(new CalendarPanel(calendarModel));
-        }
-    }
-
-//    public class TaskListener implements ActionListener {
+//    public class CalendarListener implements ActionListener {
 //
 //        @Override
 //        public void actionPerformed(ActionEvent e) {
-//            mainWindow.paintPanel(new TaskPanel());
+//            modelCalendarCreater();
+//            mainWindow.paintPanel(new CalendarPanel(calendarModel));
 //        }
-//    }
-
-    public class BackButtonListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            mainWindow.paintPanel(new MainPanel());
-        }
-
-    }
-
-
+    //}
     private int getTaskChangedIndex() {
         int indexChangedTask = 0;
         for (int i = 0; i < taskList.size(); i++) {
@@ -269,11 +250,7 @@ MainPanel.setFistList(true);
 
         @Override
         public void windowClosing(WindowEvent e) {
-//            Date current = new Date(System.currentTimeMillis());
-//            for (Task task : taskList) {
-//                if (task!=null&task.getEnd().before(current) || task.getTime().before(current))
-//                    taskList.remove(task);
-//            }
+
 
             ArrayTaskList listToWrite = new ArrayTaskList();
             for (Task task : taskList) {
@@ -344,7 +321,7 @@ MainPanel.setFistList(true);
 
     private static void modelCalendarCreater() {
         calendarModel = new DefaultListModel<>();
-        Date from = new Date(System.currentTimeMillis() - 84000000);
+        Date from = new Date();
         Date to = new Date(System.currentTimeMillis() + 86400000 * 7);
         int index = -1;
 

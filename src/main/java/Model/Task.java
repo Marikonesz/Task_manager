@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by васыль on 23.09.2015.
  */
 public  class Task implements Cloneable,Serializable{
-    String title;
+   private String title;
     private Date start;
     private Date end;
     private Duration interval;
@@ -40,8 +40,8 @@ public  class Task implements Cloneable,Serializable{
 
         this.title = title;
         this.time = time;
-        this.start = new Date(0);
-        this.end = new Date(0);
+        this.start = new Date();
+        this.end = new Date();
         this.interval =Duration.ofMillis(0) ;
     }
 
@@ -54,7 +54,7 @@ public  class Task implements Cloneable,Serializable{
     }
 
     public Date getTime() {
-        if (start.getTime() == 0||start==null)
+        if (!this.isRepeated())
             return time;
         else
             return start;
@@ -126,11 +126,13 @@ public  class Task implements Cloneable,Serializable{
 
   public   Date nextTimeAfter(Date current) {
       // if (active) {
-           if (time.getTime() > 0 && current.before(time))
-
-               return time;
+      long startAfterCurrent = -1;
+           if (!this.isRepeated()) {
+               if(current.before(time))
+               startAfterCurrent = time.getTime();
+           }
            else {
-               long startAfterCurrent = -1;
+
                for (long i = start.getTime(); i <= end.getTime(); i = i + interval.toMillis()) {
 
 
@@ -141,11 +143,12 @@ public  class Task implements Cloneable,Serializable{
 
 
                }
-               return new Date(startAfterCurrent);
+
+
            }
 
 
-
+      return new Date(startAfterCurrent);
     }
 
     @Override
