@@ -132,6 +132,7 @@ public class TaskManagerController {
                 newTask.setActive(TaskPanel.active);
             taskList.add(newTask);
 
+logger.warn("new task created");
 
         }
 
@@ -154,37 +155,35 @@ public class TaskManagerController {
                         taskList.getTask(i).setTime(TaskPanel.time, TaskPanel.end, TaskPanel.interval);
                     } else
                         taskList.getTask(i).setTime(TaskPanel.time);
-                    System.out.println(TaskPanel.interval);
-                    System.out.println(taskList.getTask(i).getInterval());
                     break;
                 }
             }
 
-
+logger.warn("task was changed");
         }
     }
 
-    public class CreateButtonListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            CreateTaskPanel.initializeParemeters();
-            if (CreateTaskPanel.time != null)
-
-                taskList.add(new Task(CreateTaskPanel.title, CreateTaskPanel.time));
-            else
-                taskList.add(new Task(CreateTaskPanel.title, CreateTaskPanel.start, CreateTaskPanel.end, CreateTaskPanel.interval));
-            mainWindow.paintPanel(new AllTaskListPanel(model));
-            TitleChanger(CreateTaskPanel.title);
-            TimeChanger(CreateTaskPanel.time);
-            startChanger(CreateTaskPanel.start);
-            endChanger(CreateTaskPanel.end);
-            IntervalChanger(CreateTaskPanel.interval);
-
-
-        }
-
-    }
+//    public class CreateButtonListener implements ActionListener {
+//
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            CreateTaskPanel.initializeParemeters();
+//            if (CreateTaskPanel.time != null)
+//
+//                taskList.add(new Task(CreateTaskPanel.title, CreateTaskPanel.time));
+//            else
+//                taskList.add(new Task(CreateTaskPanel.title, CreateTaskPanel.start, CreateTaskPanel.end, CreateTaskPanel.interval));
+//            mainWindow.paintPanel(new AllTaskListPanel(model));
+//            TitleChanger(CreateTaskPanel.title);
+//            TimeChanger(CreateTaskPanel.time);
+//            startChanger(CreateTaskPanel.start);
+//            endChanger(CreateTaskPanel.end);
+//            IntervalChanger(CreateTaskPanel.interval);
+//
+//
+//        }
+//
+//    }
 
     public class RemoveTaskButtonListener implements ActionListener {
 
@@ -192,7 +191,7 @@ public class TaskManagerController {
         public void actionPerformed(ActionEvent e) {
             taskList.remove(task);
             modelCreater();
-
+logger.warn("task removed");
         }
     }
 
@@ -229,6 +228,7 @@ public class TaskManagerController {
             File file = new File("filetasks");
             file.delete();
             TaskIO.writeBinary(listToWrite, file);
+            logger.warn("Task manager was closed");
             System.exit(0);
         }
 

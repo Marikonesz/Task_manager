@@ -26,6 +26,7 @@ public class AllTaskListPanel extends JPanel {
 
         JScrollPane taskScrollList = new JScrollPane(allTasksList);
         taskScrollList.setPreferredSize(new Dimension(300, 500));
+        taskScrollList.createVerticalScrollBar();
 
         this.add(taskScrollList);
     }
