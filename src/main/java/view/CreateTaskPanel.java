@@ -25,8 +25,8 @@ public class CreateTaskPanel extends JPanel {
     public static Date end;
     public static Duration interval;
     public static Date time;
-   private  static JTextField fieldTitleTask;
-    private static  JDateChooser  enterTime;
+    private static JTextField fieldTitleTask;
+    private static JDateChooser enterTime;
     private static JDateChooser enterStart;
     private static JDateChooser enterEnd;
     private static JFormattedTextField enterInterval;
@@ -35,7 +35,7 @@ public class CreateTaskPanel extends JPanel {
     public CreateTaskPanel() {
         this.setLayout(new GridLayout(6, 2, 5, 30));
         JLabel lableTitleTask = new JLabel("Task");
-          fieldTitleTask = new JTextField(30);
+        fieldTitleTask = new JTextField(30);
 
         JLabel lableTimeTask = new JLabel("time");
         enterTime = new JDateChooser();
@@ -44,17 +44,18 @@ public class CreateTaskPanel extends JPanel {
         enterStart = new JDateChooser();
 
         JLabel lableEndTask = new JLabel("end");
-         enterEnd = new JDateChooser();
+        enterEnd = new JDateChooser();
 
         JLabel lableintervalTask = new JLabel("interval");
-         enterInterval = new JFormattedTextField();
+        enterInterval = new JFormattedTextField();
         enterInterval.setFormatterFactory(new DefaultFormatterFactory(new DateFormatter(new SimpleDateFormat(
-                "H'h' mm'm'"  ))));
+                "H'h' mm'm'"))));
         enterInterval.setValue(Calendar.getInstance().getTime());
 
         enterInterval.addPropertyChangeListener("value", new PropertyChangeListener() {
 
-            @Override public void propertyChange(PropertyChangeEvent evt) {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
 
 
             }
@@ -90,7 +91,7 @@ public class CreateTaskPanel extends JPanel {
         this.add(lableTimeTask);
         this.add(enterTime);
         this.add(lableEndTask);
-       this.add(enterEnd);
+        this.add(enterEnd);
         this.add(lableintervalTask);
         this.add(enterInterval);
         this.add(createTaskButton);
@@ -98,26 +99,30 @@ public class CreateTaskPanel extends JPanel {
 
         createTaskButton.addActionListener(new TaskManagerController().new CreateButtonListener());
     }
-   public static void initializeParemeters(){
-       title = fieldTitleTask.getText();
-       start = enterStart.getDate();
-       end = enterEnd.getDate();
-      interval = Duration.parse(intervalParser(enterInterval.getText()));
-       time = enterTime.getDate();
-   }
-    public static void primaryParameters(Task task){
+
+    public static void initializeParemeters() {
+        title = fieldTitleTask.getText();
+        start = enterStart.getDate();
+        end = enterEnd.getDate();
+        interval = Duration.parse(intervalParser(enterInterval.getText()));
+        time = enterTime.getDate();
+    }
+
+    public static void primaryParameters(Task task) {
         fieldTitleTask.setText(task.getTitle());
         enterTime.setDate(task.getTime());
         enterStart.setDate(task.getStart());
         enterEnd.setDate(task.getEnd());
-enterInterval.setText(intervalString(task.getInterval()));
+        enterInterval.setText(intervalString(task.getInterval()));
     }
-    private static String intervalParser(String interval){
-        return "PT"+interval.substring(0,2)+"H"+interval.substring(4,6)+"M";
+
+    private static String intervalParser(String interval) {
+        return "PT" + interval.substring(0, 2) + "H" + interval.substring(4, 6) + "M";
     }
-private static String intervalString(Duration interval){
-    long hours = interval.getSeconds()/3600;
-    long minutes = (interval.getSeconds()%3600)/60;
-    return hours+"h "+ minutes + "m";
-}
+
+    private static String intervalString(Duration interval) {
+        long hours = interval.getSeconds() / 3600;
+        long minutes = (interval.getSeconds() % 3600) / 60;
+        return hours + "h " + minutes + "m";
+    }
 }

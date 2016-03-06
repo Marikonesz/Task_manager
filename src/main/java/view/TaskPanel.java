@@ -16,10 +16,10 @@ public class TaskPanel extends JPanel {
     private static JTextField fieldTitleTask;
     private JLabel lableTimeTask;
     private static JDateChooser fieldTimeTask;
-   private JLabel lableEndTask;
-  private static JDateChooser fieldEndTask;
+    private JLabel lableEndTask;
+    private static JDateChooser fieldEndTask;
     private JLabel intervalLabel;
-    private JPanel intervalPanel ;
+    private JPanel intervalPanel;
     private static JTextField hours;
     private static JTextField minutes;
     public static String title;
@@ -43,8 +43,9 @@ public class TaskPanel extends JPanel {
         fieldTimeTask.setDate(task.getTime());
 
         lableEndTask = new JLabel("   end");
-         fieldEndTask = new JDateChooser();
-
+        fieldEndTask = new JDateChooser();
+        fieldTimeTask.setDateFormatString("dd.MM.yyyy HH:mm");
+        fieldEndTask.setDateFormatString("dd.MM.yyyy HH:mm");
         fieldEndTask.setDate(task.getEnd());
 
 
@@ -53,33 +54,32 @@ public class TaskPanel extends JPanel {
         JButton changeTaskButton = new JButton("change");
         changeTaskButton.addActionListener(new TaskManagerController().new ChangeTaskButtonListener());
         intervalLabel = new JLabel("interval");
-        intervalPanel =  new JPanel();
+        intervalPanel = new JPanel();
         hours = new JTextField(2);
         minutes = new JTextField(2);
         if (!task.isRepeated())
             hours.setText("0");
         else
-        hours.setText("" + task.getInterval().getSeconds()/3600);
+            hours.setText("" + task.getInterval().getSeconds() / 3600);
         if (!task.isRepeated())
             minutes.setText("0");
         else
-        minutes.setText("" + (task.getInterval().getSeconds()%3600)/60);
+            minutes.setText("" + (task.getInterval().getSeconds() % 3600) / 60);
         intervalPanel.add(hours);
         intervalPanel.add(new JLabel("hours"));
         intervalPanel.add(minutes);
         intervalPanel.add(new JLabel("minutes"));
 
 
-
         JCheckBox activCheck = new JCheckBox("active", onOff);
-        JCheckBox repeatedCheck = new JCheckBox("repeated",repeated);
+        JCheckBox repeatedCheck = new JCheckBox("repeated", repeated);
         repeatedCheck.addItemListener(new TaskManagerController().new TaskRepeatedListener());
         activCheck.addItemListener(new TaskManagerController().new TaskActiveListener());
-    if (!repeatedCheck.isSelected()) {
-        fieldEndTask.setEnabled(false);
-        hours.setEnabled(false);
-        minutes.setEnabled(false);
-    }
+        if (!repeatedCheck.isSelected()) {
+            fieldEndTask.setEnabled(false);
+            hours.setEnabled(false);
+            minutes.setEnabled(false);
+        }
         this.add(lableTitleTask);
         this.add(fieldTitleTask);
 
@@ -94,7 +94,7 @@ public class TaskPanel extends JPanel {
 
     }
 
-    public  static void initializeParemeters() {
+    public static void initializeParemeters() {
 
         title = fieldTitleTask.getText();
         end = fieldEndTask.getDate();

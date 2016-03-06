@@ -1,6 +1,5 @@
 package Model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -23,8 +22,6 @@ public class ArrayTaskList extends TaskList {
         this.arrayTaskList = new Task[10];
         this.size = 0;
     }
-
-
 
 
     /**
@@ -53,7 +50,7 @@ public class ArrayTaskList extends TaskList {
      * @param index
      * @return
      */
-   public Task getTask(int index) {
+    public Task getTask(int index) {
 
 
         return arrayTaskList[index];
@@ -78,7 +75,7 @@ public class ArrayTaskList extends TaskList {
                 }
             }
         }
-        for (int j = startCopy ; j < intermediateArr.length; j++) {
+        for (int j = startCopy; j < intermediateArr.length; j++) {
             intermediateArr[j] = arrayTaskList[j + 1];
         }
 

@@ -21,7 +21,7 @@ public class MainPanel extends JPanel {
     private JButton changeTaskButton = new JButton("edit");
     private JButton createTaskButton = new JButton("create task");
     private static JTextField notifyField = new JTextField();
-private JPanel notifyPanel = new JPanel();
+    private JPanel notifyPanel = new JPanel();
 
     private JPanel taskParametres = new TaskPanel(TaskManagerController.task);
 
@@ -33,8 +33,9 @@ private JPanel notifyPanel = new JPanel();
         buttonsPanel.add(deleteTaskButton);
         buttonsPanel.add(changeTaskButton);
         buttonsPanel.add(createTaskButton);
-notifyPanel.setLayout(new BorderLayout());
-        notifyPanel.add(notifyField,BorderLayout.SOUTH);
+        notifyField.setEditable(false);
+        notifyPanel.setLayout(new BorderLayout());
+        notifyPanel.add(notifyField, BorderLayout.SOUTH);
 
         this.setLayout(new GridLayout(1, 2, 1, 1));
         this.setSize(400, 600);
@@ -45,7 +46,7 @@ notifyPanel.setLayout(new BorderLayout());
         serviseTaskPanel.setLayout(new GridLayout(3, 1));
         serviseTaskPanel.add(buttonsPanel);
         serviseTaskPanel.add(taskParametres);
-serviseTaskPanel.add(notifyPanel);
+        serviseTaskPanel.add(notifyPanel);
         panellists.add(tasksLists);
         this.add(panellists);
         this.add(serviseTaskPanel);
@@ -55,7 +56,8 @@ serviseTaskPanel.add(notifyPanel);
     public static void setFistList(boolean fistList) {
         MainPanel.fistList = fistList;
     }
-    public static void notifyText(String text){
+
+    public static void notifyText(String text) {
         notifyField.setText(text);
 
     }

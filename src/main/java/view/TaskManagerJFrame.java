@@ -9,16 +9,16 @@ import java.awt.*;
 
 public class TaskManagerJFrame extends JFrame {
     private JPanel currentPanel = new JPanel();
-  private   GridBagConstraints gridbag = new GridBagConstraints(3,2,3,4,0.9,0.9,GridBagConstraints.BASELINE,GridBagConstraints.ABOVE_BASELINE_TRAILING,new Insets(1,1,1,1),0,0);
+    private GridBagConstraints gridbag = new GridBagConstraints(3, 2, 3, 4, 0.9, 0.9, GridBagConstraints.BASELINE, GridBagConstraints.ABOVE_BASELINE_TRAILING, new Insets(1, 1, 1, 1), 0, 0);
     public static JTextField noticatonField;
 
 
-    public TaskManagerJFrame()  {
+    public TaskManagerJFrame() {
 
         this.setSize(800, 600);
-this.setLayout(new BorderLayout());
+        this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-this.addWindowListener(new TaskManagerController().new CloseAll());
+        this.addWindowListener(new TaskManagerController().new CloseAll());
         this.setVisible(true);
     }
 
@@ -55,12 +55,12 @@ this.addWindowListener(new TaskManagerController().new CloseAll());
 //
 //
 
-public void paintPanel(JPanel panel){
+    public void paintPanel(JPanel panel) {
 
-    this.remove(currentPanel);
-    this.repaint();
-    currentPanel = panel;
-    this.add(currentPanel);
-this.revalidate();
-}
+        this.remove(currentPanel);
+        this.repaint();
+        currentPanel = panel;
+        this.add(currentPanel);
+        this.revalidate();
+    }
 }

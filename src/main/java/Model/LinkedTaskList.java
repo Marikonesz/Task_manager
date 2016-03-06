@@ -20,7 +20,6 @@ public class LinkedTaskList extends TaskList {
         private Task task;
 
 
-
         public Link(Task task) {
             this.task = task;
         }
@@ -28,8 +27,6 @@ public class LinkedTaskList extends TaskList {
         public Task getTask() {
             return task;
         }
-
-
 
 
     }
@@ -125,7 +122,7 @@ public class LinkedTaskList extends TaskList {
     public Iterator iterator() {
         return new Iterator() {
             private int cursor;
-            private Link lastReturned ;
+            private Link lastReturned;
 
             @Override
             public boolean hasNext() {
@@ -167,41 +164,40 @@ public class LinkedTaskList extends TaskList {
 //       return incoming;
 //    }
 
-        @Override
-        public boolean equals (Object o){
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-            LinkedTaskList tasks = (LinkedTaskList) o;
+        LinkedTaskList tasks = (LinkedTaskList) o;
 
-            if (size != tasks.size) return false;
-            if (first != null ? !first.equals(tasks.first) : tasks.first != null) return false;
-            if (last != null ? !last.equals(tasks.last) : tasks.last != null) return false;
-            return !(current != null ? !current.equals(tasks.current) : tasks.current != null);
+        if (size != tasks.size) return false;
+        if (first != null ? !first.equals(tasks.first) : tasks.first != null) return false;
+        if (last != null ? !last.equals(tasks.last) : tasks.last != null) return false;
+        return !(current != null ? !current.equals(tasks.current) : tasks.current != null);
 
-        }
+    }
 
-        @Override
-        public int hashCode () {
-            int result = size;
-            result = 31 * result + (first != null ? first.hashCode() : 0);
-            result = 31 * result + (last != null ? last.hashCode() : 0);
-            result = 31 * result + (current != null ? current.hashCode() : 0);
-            return result;
-        }
+    @Override
+    public int hashCode() {
+        int result = size;
+        result = 31 * result + (first != null ? first.hashCode() : 0);
+        result = 31 * result + (last != null ? last.hashCode() : 0);
+        result = 31 * result + (current != null ? current.hashCode() : 0);
+        return result;
+    }
 
-        @Override
-        protected Object clone ()throws CloneNotSupportedException {
-            return super.clone();
-        }
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 
     @Override
     public String toString() {
         Link thisLink = first;
         String string = "";
         {
-            for (int i = 0; i <=size; i++) {
-
+            for (int i = 0; i <= size; i++) {
 
 
                 string = string + thisLink.getTask().toString();

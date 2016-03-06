@@ -8,8 +8,8 @@ import java.util.Date;
 /**
  * Created by васыль on 23.09.2015.
  */
-public  class Task implements Cloneable,Serializable{
-   private String title;
+public class Task implements Cloneable, Serializable {
+    private String title;
     private Date start;
     private Date end;
     private Duration interval;
@@ -33,7 +33,7 @@ public  class Task implements Cloneable,Serializable{
         this.time = new Date();
         this.start = new Date();
         this.end = new Date();
-        this.interval =Duration.ofMillis(0);
+        this.interval = Duration.ofMillis(0);
     }
 
     public Task(String title, Date time) {
@@ -42,7 +42,7 @@ public  class Task implements Cloneable,Serializable{
         this.time = time;
         this.start = new Date();
         this.end = new Date();
-        this.interval =Duration.ofMillis(0) ;
+        this.interval = Duration.ofMillis(0);
     }
 
     public String getTitle() {
@@ -65,10 +65,10 @@ public  class Task implements Cloneable,Serializable{
         this.time = time;
         this.end = new Date(0);
         this.interval = Duration.ofMillis(0);
-        this.start =  new Date(0);
+        this.start = new Date(0);
     }
 
-   public void setTime(Date start, Date end, Duration interval) {
+    public void setTime(Date start, Date end, Duration interval) {
         this.start = start;
         this.end = end;
         this.interval = interval;
@@ -124,31 +124,30 @@ public  class Task implements Cloneable,Serializable{
 
     }
 
-  public   Date nextTimeAfter(Date current) {
-      // if (active) {
-      long startAfterCurrent = -1;
-           if (!this.isRepeated()) {
-               if(current.before(time))
-               startAfterCurrent = time.getTime();
-           }
-           else {
+    public Date nextTimeAfter(Date current) {
+        // if (active) {
+        long startAfterCurrent = -1;
+        if (!this.isRepeated()) {
+            if (current.before(time))
+                startAfterCurrent = time.getTime();
+        } else {
 
-               for (long i = start.getTime(); i <= end.getTime(); i = i + interval.toMillis()) {
-
-
-                   if (i >= current.getTime()) {
-                       startAfterCurrent = i;
-                       break;
-                   }
+            for (long i = start.getTime(); i <= end.getTime(); i = i + interval.toMillis()) {
 
 
-               }
+                if (i >= current.getTime()) {
+                    startAfterCurrent = i;
+                    break;
+                }
 
 
-           }
+            }
 
 
-      return new Date(startAfterCurrent);
+        }
+
+
+        return new Date(startAfterCurrent);
     }
 
     @Override
@@ -158,7 +157,7 @@ public  class Task implements Cloneable,Serializable{
 
     @Override
     public String toString() {
-        return  title;
+        return title;
     }
 
     @Override
@@ -186,8 +185,8 @@ public  class Task implements Cloneable,Serializable{
         result = 31 * result + (active ? 1 : 0);
         result = 31 * result + (time != null ? time.hashCode() : 0);
         return result;
-    }
 
+    }
 
 
 }
