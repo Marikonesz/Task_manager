@@ -60,6 +60,7 @@ public class TaskPanel extends JPanel {
         if (!task.isRepeated())
             hours.setText("0");
         else
+            System.out.println("");
             hours.setText("" + task.getInterval().getSeconds() / 3600);
         if (!task.isRepeated())
             minutes.setText("0");
