@@ -65,14 +65,14 @@ public class Task implements Cloneable, Serializable {
         this.time = time;
         this.end = new Date(0);
         this.interval = Duration.ofMillis(0);
-        this.start = new Date(0);
+        this.start = time;
     }
 
     public void setTime(Date start, Date end, Duration interval) {
         this.start = start;
         this.end = end;
         this.interval = interval;
-        this.time = new Date(0);
+        this.time = start;
     }
 
     public boolean isActive() {
@@ -167,7 +167,7 @@ public class Task implements Cloneable, Serializable {
 
         Task task = (Task) o;
 
-        if (active != task.active) return false;
+
         if (title != null ? !title.equals(task.title) : task.title != null) return false;
         if (start != null ? !start.equals(task.start) : task.start != null) return false;
         if (end != null ? !end.equals(task.end) : task.end != null) return false;

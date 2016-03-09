@@ -89,8 +89,15 @@ public class TaskIO {
                 }
                 tasks.add(task);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (EOFException e) {
+            try {
+                reader.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
+        } catch (IOException e1) {
+            e1.printStackTrace();
         } finally {
 
 
@@ -119,6 +126,8 @@ public class TaskIO {
 
     public static void readBinary(TaskList tasks, File file) {
         try {
+            if(!file.exists())
+                writeBinary(new ArrayTaskList(),file);
             read(tasks, new FileInputStream(file.getPath()));
         } catch (IOException e) {
             e.printStackTrace();

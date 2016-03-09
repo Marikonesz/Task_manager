@@ -25,6 +25,7 @@ public class TaskManagerController {
     public static SortedMap<Date, Set<Task>> onWeek = new TreeMap();
     public static Task task;
     public static boolean repeatedTask;
+    public static boolean onOff;
     public static DefaultListModel<Task> model;
     public static DefaultListModel<Task> calendarModel;
 
@@ -35,7 +36,10 @@ public class TaskManagerController {
         NotifyController notify = new NotifyController();
         TaskIO.readBinary(taskList, new File("filetasks"));
         task = taskList.getTask(0);
-        repeatedTask = task.isRepeated();
+        if (task != null) {
+            repeatedTask = task.isRepeated();
+            onOff = task.isActive();
+        }
         logger.warn("taskManager Started");
         modelCreater();
         modelCalendarCreater();
@@ -69,7 +73,7 @@ public class TaskManagerController {
     }
 
     public class TaskActiveListener implements ItemListener {
-        boolean onOff;
+
         int selected;
 
         @Override
@@ -82,7 +86,8 @@ public class TaskManagerController {
 
 
             activeChanger(onOff);
-            task.setActive(onOff);
+            if (task != null)
+                task.setActive(onOff);
             for (int i = 0; i < taskList.size(); i++) {
                 if (taskList.getTask(i).equals(task)) {
 
@@ -118,24 +123,28 @@ public class TaskManagerController {
         public void actionPerformed(ActionEvent e) {
             TaskPanel.initializeParemeters();
             boolean noContain = true;
-            Task newTask;
-            if (repeatedTask)
-                newTask = new Task(TaskPanel.title, TaskPanel.time, TaskPanel.end, TaskPanel.interval);
-            else
-                newTask = new Task(TaskPanel.title, TaskPanel.time);
-            for (Task task : taskList) {
-                if (task.equals(newTask))
-                    noContain = false;
-                break;
+            Task newTask = new Task();
+            if (TaskPanel.title != null && TaskPanel.time != null) {
+                if (repeatedTask)
+                    newTask = new Task(TaskPanel.title, TaskPanel.time, TaskPanel.end, TaskPanel.interval);
+                else
+                    newTask = new Task(TaskPanel.title, TaskPanel.time);
+                for (Task task : taskList) {
+                    if (newTask.equals(task))
+                        noContain = false;
+                    break;
+                }
+                if (noContain) {
+                    newTask.setActive(TaskPanel.active);
+                    taskList.add(newTask);
+                    modelCreater();
+                    modelCalendarCreater();
+                    mainWindow.paintPanel(new MainPanel());
+                    logger.warn("new task created");
+                }
             }
-            if (noContain)
-                newTask.setActive(TaskPanel.active);
-            taskList.add(newTask);
-
-logger.warn("new task created");
 
         }
-
     }
 
     public class ChangeTaskButtonListener implements ActionListener {
@@ -158,40 +167,25 @@ logger.warn("new task created");
                     break;
                 }
             }
-
-logger.warn("task was changed");
+            modelCreater();
+            modelCalendarCreater();
+            mainWindow.paintPanel(new MainPanel());
+            logger.warn("task was changed");
         }
     }
-
-//    public class CreateButtonListener implements ActionListener {
-//
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            CreateTaskPanel.initializeParemeters();
-//            if (CreateTaskPanel.time != null)
-//
-//                taskList.add(new Task(CreateTaskPanel.title, CreateTaskPanel.time));
-//            else
-//                taskList.add(new Task(CreateTaskPanel.title, CreateTaskPanel.start, CreateTaskPanel.end, CreateTaskPanel.interval));
-//            mainWindow.paintPanel(new AllTaskListPanel(model));
-//            TitleChanger(CreateTaskPanel.title);
-//            TimeChanger(CreateTaskPanel.time);
-//            startChanger(CreateTaskPanel.start);
-//            endChanger(CreateTaskPanel.end);
-//            IntervalChanger(CreateTaskPanel.interval);
-//
-//
-//        }
-//
-//    }
 
     public class RemoveTaskButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            taskList.remove(task);
-            modelCreater();
-logger.warn("task removed");
+            System.out.println(taskList.size());
+            if (taskList.size() > 0) {
+                taskList.remove(task);
+                modelCreater();
+                modelCalendarCreater();
+                mainWindow.paintPanel(new MainPanel());
+                logger.warn("task removed");
+            }
         }
     }
 
@@ -253,28 +247,9 @@ logger.warn("task removed");
         }
     }
 
-    private void TitleChanger(String title) {
-        taskList.getTask(this.getTaskChangedIndex()).setTitle(title);
-    }
-
-    private void TimeChanger(Date time) {
-        taskList.getTask(this.getTaskChangedIndex()).setTime(time);
-    }
-
-    private void startChanger(Date start) {
-        taskList.getTask(this.getTaskChangedIndex()).setStart(start);
-    }
-
-    private void endChanger(Date end) {
-        taskList.getTask(this.getTaskChangedIndex()).setEnd(end);
-    }
-
-    private void IntervalChanger(Duration interval) {
-        taskList.getTask(this.getTaskChangedIndex()).setInterval(interval);
-    }
-
     private void activeChanger(boolean active) {
-        taskList.getTask(this.getTaskChangedIndex()).setActive(active);
+        if (task != null)
+            taskList.getTask(this.getTaskChangedIndex()).setActive(active);
     }
 
     private static void modelCreater() {

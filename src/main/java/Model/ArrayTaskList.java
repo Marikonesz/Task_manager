@@ -61,14 +61,15 @@ public class ArrayTaskList extends TaskList {
      * @return
      */
     public boolean remove(Task task) {
-        Task[] intermediateArr = new Task[arrayTaskList.length - 1];
+        Task[] intermediateArr = new Task[size];
         int startCopy = -1;
 
-        for (int i = 0; i < arrayTaskList.length; i++) {
+        for (int i = 0; i < size; i++) {
             if (arrayTaskList[i] != null) {
-                if (!arrayTaskList[i].equals(task))
+                if (!arrayTaskList[i].equals(task)) {
                     intermediateArr[i] = arrayTaskList[i];
-                else {
+                    startCopy = i;
+                } else {
                     startCopy = i;
                     break;
 
@@ -80,7 +81,7 @@ public class ArrayTaskList extends TaskList {
         }
 
 
-        if (startCopy == 0)
+        if (startCopy == -1)
             return false;
         else {
             arrayTaskList = Arrays.copyOf(intermediateArr, intermediateArr.length);
