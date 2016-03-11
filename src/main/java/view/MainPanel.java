@@ -9,7 +9,7 @@ import java.time.Duration;
 import java.util.Date;
 
 
-public class MainPanel extends JPanel {
+public class MainPanel extends JPanel implements ControllerInterface {
     private JTabbedPane tasksLists = new JTabbedPane();
 
 
@@ -27,9 +27,9 @@ public class MainPanel extends JPanel {
 
     public MainPanel() {
 
-        deleteTaskButton.addActionListener(new TaskManagerController().new RemoveTaskButtonListener());
-        changeTaskButton.addActionListener(new TaskManagerController().new ChangeTaskButtonListener());
-        createTaskButton.addActionListener(new TaskManagerController().new CreateTaskListener());
+        deleteTaskButton.addActionListener(controller.new RemoveTaskButtonListener());
+        changeTaskButton.addActionListener(controller.new ChangeTaskButtonListener());
+        createTaskButton.addActionListener(controller.new CreateTaskListener());
         buttonsPanel.add(deleteTaskButton);
         buttonsPanel.add(changeTaskButton);
         buttonsPanel.add(createTaskButton);

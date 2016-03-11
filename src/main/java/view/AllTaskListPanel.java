@@ -14,14 +14,14 @@ import static Controller.TaskManagerController.taskList;
 /**
  * Created by васыль on 05.02.2016.
  */
-public class AllTaskListPanel extends JPanel {
+public class AllTaskListPanel extends JPanel implements ControllerInterface {
     public static JList allTasksList;
 
     public AllTaskListPanel(DefaultListModel model) {
 
 
         allTasksList = new JList(model);
-        allTasksList.addListSelectionListener(new TaskManagerController().new TaskListSelectionListener());
+        allTasksList.addListSelectionListener(controller.new TaskListSelectionListener());
         allTasksList.setLayoutOrientation(JList.VERTICAL);
 
         JScrollPane taskScrollList = new JScrollPane(allTasksList);

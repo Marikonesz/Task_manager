@@ -9,13 +9,13 @@ import java.awt.*;
 /**
  * Created by васыль on 05.02.2016.
  */
-public class CalendarPanel extends JPanel {
+public class CalendarPanel extends JPanel implements ControllerInterface {
     public static JList CalendarList;
 
     public CalendarPanel(DefaultListModel model) {
 
         CalendarList = new JList(model);
-        CalendarList.addListSelectionListener(new TaskManagerController().new CalendarSelectionListener());
+        CalendarList.addListSelectionListener(controller.new CalendarSelectionListener());
         CalendarList.setLayoutOrientation(JList.VERTICAL);
 
         JScrollPane taskScrollList = new JScrollPane(CalendarList);

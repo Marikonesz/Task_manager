@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class TaskManagerJFrame extends JFrame {
+public class TaskManagerJFrame extends JFrame implements ControllerInterface{
     private JPanel currentPanel = new JPanel();
 
     public TaskManagerJFrame() {
@@ -15,7 +15,7 @@ public class TaskManagerJFrame extends JFrame {
         this.setSize(800, 600);
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.addWindowListener(new TaskManagerController().new CloseAll());
+        this.addWindowListener(controller.new CloseAll());
         this.setVisible(true);
     }
 

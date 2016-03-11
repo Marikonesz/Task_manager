@@ -10,7 +10,7 @@ import java.time.Duration;
 import java.util.Date;
 
 
-public class TaskPanel extends JPanel {
+public class TaskPanel extends JPanel implements ControllerInterface {
 
     private JLabel lableTitleTask;
     private static JTextField fieldTitleTask;
@@ -50,9 +50,9 @@ public class TaskPanel extends JPanel {
 
         }
             JButton deleteTaskButton = new JButton("delete");
-            deleteTaskButton.addActionListener(new TaskManagerController().new RemoveTaskButtonListener());
+            deleteTaskButton.addActionListener(controller.new RemoveTaskButtonListener());
             JButton changeTaskButton = new JButton("change");
-            changeTaskButton.addActionListener(new TaskManagerController().new ChangeTaskButtonListener());
+            changeTaskButton.addActionListener(controller.new ChangeTaskButtonListener());
             intervalLabel = new JLabel("interval");
             intervalPanel = new JPanel();
             hours = new JTextField(2);
@@ -71,8 +71,8 @@ public class TaskPanel extends JPanel {
 
             JCheckBox activCheck = new JCheckBox("active", onOff);
             JCheckBox repeatedCheck = new JCheckBox("repeated", repeated);
-            repeatedCheck.addItemListener(new TaskManagerController().new TaskRepeatedListener());
-            activCheck.addItemListener(new TaskManagerController().new TaskActiveListener());
+            repeatedCheck.addItemListener(controller.new TaskRepeatedListener());
+            activCheck.addItemListener(controller.new TaskActiveListener());
             if (!repeatedCheck.isSelected()) {
                 fieldEndTask.setEnabled(false);
                 hours.setEnabled(false);
