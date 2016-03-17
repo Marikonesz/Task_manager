@@ -1,15 +1,13 @@
 package view;
 
-import Controller.TaskManagerController;
-import Model.Task;
-import Model.TaskList;
+
 
 import javax.swing.*;
 
 
 import java.awt.*;
 
-import static Controller.TaskManagerController.taskList;
+
 
 /**
  * Created by васыль on 05.02.2016.

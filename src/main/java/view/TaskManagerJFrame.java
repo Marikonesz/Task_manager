@@ -16,16 +16,11 @@ public class TaskManagerJFrame extends JFrame implements ControllerInterface{
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(controller.new CloseAll());
+        this.add(new MainPanel());
         this.setVisible(true);
+
     }
 
 
-    public void paintPanel(JPanel panel) {
 
-        this.remove(currentPanel);
-        this.repaint();
-        currentPanel = panel;
-        this.add(currentPanel);
-        this.revalidate();
-    }
 }

@@ -23,7 +23,7 @@ public class MainPanel extends JPanel implements ControllerInterface {
     private static JTextField notifyField = new JTextField();
     private JPanel notifyPanel = new JPanel();
 
-    private JPanel taskParametres = new TaskPanel(TaskManagerController.task);
+    private JPanel taskParametres = TaskManagerController.taskPanel;
 
     public MainPanel() {
 

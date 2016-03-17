@@ -1,8 +1,5 @@
 package view;
 
-import Controller.TaskManagerController;
-import Model.Task;
-
 import javax.swing.*;
 import java.awt.*;
 

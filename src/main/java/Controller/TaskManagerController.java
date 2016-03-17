@@ -10,7 +10,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.*;
 import java.io.File;
-import java.time.Duration;
 import java.util.*;
 
 /**
@@ -20,7 +19,8 @@ import java.util.*;
 public class TaskManagerController {
     final static Logger logger = Logger.getLogger(TaskManagerController.class);
 
-    public static TaskManagerJFrame mainWindow = new TaskManagerJFrame();
+    public static TaskManagerJFrame mainWindow;
+    public static TaskPanel taskPanel;
     public static TaskList taskList = new ArrayTaskList();
     public static SortedMap<Date, Set<Task>> onWeek = new TreeMap();
     public static Task task;
@@ -39,12 +39,13 @@ public class TaskManagerController {
         if (task != null) {
             repeatedTask = task.isRepeated();
             onOff = task.isActive();
+
         }
         logger.warn("taskManager Started");
         modelCreater();
         modelCalendarCreater();
-
-        mainWindow.paintPanel(new MainPanel());
+        taskPanel = new TaskPanel(task);
+        mainWindow = new TaskManagerJFrame();
         notify.start();
 
 
@@ -54,9 +55,13 @@ public class TaskManagerController {
 
         @Override
         public void valueChanged(ListSelectionEvent e) {
+
             task = (Task) AllTaskListPanel.allTasksList.getSelectedValue();
-            repeatedTask = task.isRepeated();
-            mainWindow.paintPanel(new MainPanel());
+            if (task != null) {
+                repeatedTask = task.isRepeated();
+                onOff = task.isActive();
+                taskPanel.writeParameters(task);
+            }
 
         }
     }
@@ -67,7 +72,7 @@ public class TaskManagerController {
         public void valueChanged(ListSelectionEvent e) {
             TaskManagerController.task = (Task) CalendarPanel.CalendarList.getSelectedValue();
             MainPanel.setFistList(true);
-            mainWindow.paintPanel(new MainPanel());
+            mainWindow.repaint();
             MainPanel.setFistList(false);
         }
     }
@@ -86,13 +91,14 @@ public class TaskManagerController {
 
 
             activeChanger(onOff);
-            if (task != null)
+            if (task != null) {
                 task.setActive(onOff);
-            for (int i = 0; i < taskList.size(); i++) {
-                if (taskList.getTask(i).equals(task)) {
+                for (int i = 0; i < taskList.size(); i++) {
+                    if (taskList.getTask(i).equals(task)) {
 
-                    taskList.getTask(i).setActive(TaskPanel.active);
-                    break;
+                        taskList.getTask(i).setActive(task.isActive());
+                        break;
+                    }
                 }
             }
 
@@ -110,8 +116,10 @@ public class TaskManagerController {
                 repeatedTask = true;
             else
                 repeatedTask = false;
-            mainWindow.paintPanel(new MainPanel());
-
+            if (taskPanel != null) {
+                taskPanel.writeParameters(task);
+                mainWindow.repaint();
+            }
 
         }
 
@@ -135,16 +143,20 @@ public class TaskManagerController {
                     break;
                 }
                 if (noContain) {
-                    newTask.setActive(TaskPanel.active);
                     taskList.add(newTask);
-                    modelCreater();
-                    modelCalendarCreater();
-                    mainWindow.paintPanel(new MainPanel());
+                    newTask.setActive(TaskPanel.active);
+                    task = newTask;
+                    model.addElement(newTask);
+
+                    if (newTask.getTime().getTime() >= new Date(System.currentTimeMillis() - 10000).getTime() && newTask.getTime().getTime() <= new Date(System.currentTimeMillis() + 86400000 * 7).getTime())
+                        calendarModel.addElement(newTask);
+
                     logger.warn("new task created");
                 }
             }
 
         }
+
     }
 
     public class ChangeTaskButtonListener implements ActionListener {
@@ -158,7 +170,6 @@ public class TaskManagerController {
                 if (taskList.getTask(i).equals(task)) {
 
                     taskList.getTask(i).setTitle(TaskPanel.title);
-
                     taskList.getTask(i).setActive(TaskPanel.active);
                     if (TaskPanel.interval.toMillis() != 0 && repeatedTask) {
                         taskList.getTask(i).setTime(TaskPanel.time, TaskPanel.end, TaskPanel.interval);
@@ -169,7 +180,7 @@ public class TaskManagerController {
             }
             modelCreater();
             modelCalendarCreater();
-            mainWindow.paintPanel(new MainPanel());
+            mainWindow.repaint();
             logger.warn("task was changed");
         }
     }
@@ -178,12 +189,14 @@ public class TaskManagerController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println(taskList.size());
+
             if (taskList.size() > 0) {
                 taskList.remove(task);
-                modelCreater();
-                modelCalendarCreater();
-                mainWindow.paintPanel(new MainPanel());
+                model.removeElement(task);
+                if (task != null) {
+                    if (task.getTime().getTime() >= new Date().getTime() && task.getTime().getTime() <= new Date(System.currentTimeMillis() + 86400000 * 7).getTime())
+                        calendarModel.removeElement(task);
+                }
                 logger.warn("task removed");
             }
         }

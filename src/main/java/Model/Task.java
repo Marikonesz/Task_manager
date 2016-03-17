@@ -23,10 +23,10 @@ public class Task implements Cloneable, Serializable {
         this.end = end;
         this.interval = interval;
         this.time = new Date(0);
-        if (start.getTime() < 0 && end.getTime() < 0 || end.getTime() < start.getTime() || interval.isZero()) {
-            throw new IllegalArgumentException("Arguments can't have negative values,the interval must be greater than zero ");
+//        if (start.getTime() < 0 && end.getTime() < 0 || end.getTime() < start.getTime() || interval.isZero()) {
+//            throw new IllegalArgumentException("Arguments can't have negative values,the interval must be greater than zero ");
         }
-    }
+
 
     public Task() {
         this.title = "";

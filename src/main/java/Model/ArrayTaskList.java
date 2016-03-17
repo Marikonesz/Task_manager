@@ -35,7 +35,7 @@ public class ArrayTaskList extends TaskList {
 
             Task[] intermediateArray = Arrays.copyOf(arrayTaskList, size + 10);
             arrayTaskList = Arrays.copyOf(intermediateArray, size + 10);
-            intermediateArray = null;
+         //   intermediateArray = null;
         }
         arrayTaskList[size - 1] = task;
 
