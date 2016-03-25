@@ -24,7 +24,8 @@ public class NotifyController extends Thread {
         logger.warn("notify system started");
         Date date;
         while (true) {
-            TaskIO.readBinary(list, new File("filetasks"));
+          //  TaskIO.readBinary(list, new File("filetasks"));
+            list = (ArrayTaskList) TaskManagerController.taskList;
             date = new Date();
             for (Task task : list) {
                 if (task.nextTimeAfter(date).before(new Date(date.getTime() + 300000)) && task.nextTimeAfter(date).after(date)) {
@@ -37,7 +38,7 @@ public class NotifyController extends Thread {
             try {
                 sleep(60000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+               logger.error("InterruptedException in notify system");
             }
 
 

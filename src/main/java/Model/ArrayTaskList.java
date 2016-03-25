@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -33,10 +34,12 @@ public class ArrayTaskList extends TaskList {
         size++;
         if (size % 10 == 0) {
 
-            Task[] intermediateArray = Arrays.copyOf(arrayTaskList, size + 10);
-            arrayTaskList = Arrays.copyOf(intermediateArray, size + 10);
+            Task[] intermediateArray = Arrays.copyOf(arrayTaskList, arrayTaskList.length);
+            arrayTaskList = Arrays.copyOf(intermediateArray,arrayTaskList.length+10);
          //   intermediateArray = null;
         }
+        System.out.println(arrayTaskList.length+" " + size);
+
         arrayTaskList[size - 1] = task;
 
     }
@@ -52,7 +55,6 @@ public class ArrayTaskList extends TaskList {
      */
     public Task getTask(int index) {
 
-
         return arrayTaskList[index];
     }
 
@@ -61,9 +63,8 @@ public class ArrayTaskList extends TaskList {
      * @return
      */
     public boolean remove(Task task) {
-        Task[] intermediateArr = new Task[size];
+        Task[] intermediateArr = new Task[arrayTaskList.length];
         int startCopy = -1;
-
         for (int i = 0; i < size; i++) {
             if (arrayTaskList[i] != null) {
                 if (!arrayTaskList[i].equals(task)) {
@@ -76,7 +77,8 @@ public class ArrayTaskList extends TaskList {
                 }
             }
         }
-        for (int j = startCopy; j < intermediateArr.length; j++) {
+        for (int j = startCopy; j < size; j++) {
+            System.out.println(arrayTaskList.length);
             intermediateArr[j] = arrayTaskList[j + 1];
         }
 
@@ -84,7 +86,7 @@ public class ArrayTaskList extends TaskList {
         if (startCopy == -1)
             return false;
         else {
-            arrayTaskList = Arrays.copyOf(intermediateArr, intermediateArr.length);
+            arrayTaskList = Arrays.copyOf(intermediateArr,intermediateArr.length );
             intermediateArr = null;
             size--;
             return true;

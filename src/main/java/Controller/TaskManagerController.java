@@ -34,6 +34,7 @@ public class TaskManagerController {
 
 
         NotifyController notify = new NotifyController();
+        notify.setDaemon(true);
         TaskIO.readBinary(taskList, new File("filetasks"));
         task = taskList.getTask(0);
         if (task != null) {
@@ -72,7 +73,7 @@ public class TaskManagerController {
         public void valueChanged(ListSelectionEvent e) {
             TaskManagerController.task = (Task) CalendarPanel.CalendarList.getSelectedValue();
             MainPanel.setFistList(true);
-            mainWindow.repaint();
+            taskPanel.writeParameters(task);
             MainPanel.setFistList(false);
         }
     }
@@ -148,9 +149,11 @@ public class TaskManagerController {
                     task = newTask;
                     model.addElement(newTask);
 
+
                     if (newTask.getTime().getTime() >= new Date(System.currentTimeMillis() - 10000).getTime() && newTask.getTime().getTime() <= new Date(System.currentTimeMillis() + 86400000 * 7).getTime())
                         calendarModel.addElement(newTask);
-
+                    mainWindow.repaint();
+                    mainWindow.revalidate();
                     logger.warn("new task created");
                 }
             }
@@ -190,15 +193,22 @@ public class TaskManagerController {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            if (taskList.size() > 0) {
-                taskList.remove(task);
-                model.removeElement(task);
-                if (task != null) {
-                    if (task.getTime().getTime() >= new Date().getTime() && task.getTime().getTime() <= new Date(System.currentTimeMillis() + 86400000 * 7).getTime())
-                        calendarModel.removeElement(task);
-                }
-                logger.warn("task removed");
-            }
+
+int sure = JOptionPane.showConfirmDialog(mainWindow,"Are you sure?","deleting task",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.CLOSED_OPTION);
+           if (sure == JOptionPane.OK_OPTION) {
+               if (taskList.size() > 0) {
+                   if (taskList.remove(task)) {
+                       model.removeElement(task);
+                       if (task != null) {
+                           if (task.getTime().getTime() >= new Date().getTime() && task.getTime().getTime() <= new Date(System.currentTimeMillis() + 86400000 * 7).getTime())
+                               calendarModel.removeElement(task);
+                       }
+                       mainWindow.repaint();
+                       mainWindow.revalidate();
+                       logger.warn("task removed");
+                   }
+               }
+           }
         }
     }
 

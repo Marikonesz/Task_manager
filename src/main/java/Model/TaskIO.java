@@ -1,7 +1,8 @@
 package Model;
 
-import Model.TaskList;
-import Model.Task;
+
+
+import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.text.ParseException;
@@ -11,6 +12,7 @@ import java.util.Date;
 
 
 public class TaskIO {
+    static Logger logger = Logger.getLogger(TaskIO.class);
     static void write(TaskList tasks, OutputStream out) {
 
         DataOutputStream writer = new DataOutputStream(out);
@@ -33,14 +35,14 @@ public class TaskIO {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("IOExeption");
         } finally {
 
             if (writer != null)
                 try {
                     writer.close();
                 } catch (IOException e) {
-
+                    logger.error("IOExeption");
 
                 }
         }
@@ -50,7 +52,6 @@ public class TaskIO {
     static void read(TaskList tasks, InputStream in) {
         DataInputStream reader = new DataInputStream(in);
         int count = 0;
-        int titleLength = 0;
         try {
             count = reader.readInt();//чтение количества задач
 
@@ -58,17 +59,12 @@ public class TaskIO {
             for (int i = 0; i < count; i++) {
                 Task task = new Task();
 
-                try {
-                    titleLength = reader.readInt();//чтение длины тайтл
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 try {
                     task.setTitle(reader.readUTF());//чтение тайтл
 
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error("IOExeption");
                 }
 
 
@@ -93,11 +89,11 @@ public class TaskIO {
             try {
                 reader.close();
             } catch (IOException e1) {
-                e1.printStackTrace();
+                logger.error("IOExeption");
             }
 
         } catch (IOException e1) {
-            e1.printStackTrace();
+            logger.error("IOExeption");
         } finally {
 
 
