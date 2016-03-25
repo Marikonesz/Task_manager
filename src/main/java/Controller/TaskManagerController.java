@@ -196,17 +196,14 @@ public class TaskManagerController {
 
 int sure = JOptionPane.showConfirmDialog(mainWindow,"Are you sure?","deleting task",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.CLOSED_OPTION);
            if (sure == JOptionPane.OK_OPTION) {
-               if (taskList.size() > 0) {
+               if (taskList.size()>= 0) {
                    if (taskList.remove(task)) {
                        model.removeElement(task);
-                       if (task != null) {
-                           if (task.getTime().getTime() >= new Date().getTime() && task.getTime().getTime() <= new Date(System.currentTimeMillis() + 86400000 * 7).getTime())
-                               calendarModel.removeElement(task);
-                       }
-                       mainWindow.repaint();
-                       mainWindow.revalidate();
+                       calendarModel.removeElement(task);
                        logger.warn("task removed");
                    }
+                   mainWindow.repaint();
+                   mainWindow.revalidate();
                }
            }
         }
