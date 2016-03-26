@@ -10,7 +10,7 @@ import java.time.Duration;
 import java.util.Date;
 
 
-public class TaskPanel extends JPanel implements ControllerInterface {
+public class TaskPanel extends JPanel  {
 
     private JLabel lableTitleTask;
     private static JTextField fieldTitleTask;
@@ -44,9 +44,9 @@ public class TaskPanel extends JPanel implements ControllerInterface {
         fieldTimeTask.setDateFormatString("dd.MM.yyyy HH:mm");
         fieldEndTask.setDateFormatString("dd.MM.yyyy HH:mm");
         JButton deleteTaskButton = new JButton("delete");
-        deleteTaskButton.addActionListener(controller.new RemoveTaskButtonListener());
+        deleteTaskButton.addActionListener(TaskManagerJFrame.controller.new RemoveTaskButtonListener());
         JButton changeTaskButton = new JButton("change");
-        changeTaskButton.addActionListener(controller.new ChangeTaskButtonListener());
+        changeTaskButton.addActionListener(TaskManagerJFrame.controller.new ChangeTaskButtonListener());
         intervalLabel = new JLabel("interval");
         intervalPanel = new JPanel();
         hours = new JTextField(2);
@@ -59,8 +59,8 @@ public class TaskPanel extends JPanel implements ControllerInterface {
         intervalPanel.add(new JLabel("minutes"));
         activCheck = new JCheckBox("active");
         repeatedCheck = new JCheckBox("repeated");
-        repeatedCheck.addItemListener(controller.new TaskRepeatedListener());
-        activCheck.addItemListener(controller.new TaskActiveListener());
+        repeatedCheck.addItemListener(TaskManagerJFrame.controller.new TaskRepeatedListener());
+        activCheck.addItemListener(TaskManagerJFrame.controller.new TaskActiveListener());
         this.add(lableTitleTask);
         this.add(fieldTitleTask);
         this.add(lableTimeTask);
