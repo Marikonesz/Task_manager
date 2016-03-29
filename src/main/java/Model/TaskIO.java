@@ -61,6 +61,7 @@ public class TaskIO {
 
 
                 try {
+                    reader.readInt();
                     task.setTitle(reader.readUTF());//чтение тайтл
 
                 } catch (IOException e) {

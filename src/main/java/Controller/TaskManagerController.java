@@ -71,7 +71,7 @@ public class TaskManagerController {
 
         @Override
         public void valueChanged(ListSelectionEvent e) {
-            TaskManagerController.task = (Task) CalendarPanel.CalendarList.getSelectedValue();
+            task = (Task) CalendarPanel.CalendarList.getSelectedValue();
             MainPanel.setFistList(true);
             taskPanel.writeParameters(task);
             MainPanel.setFistList(false);
@@ -168,7 +168,8 @@ public class TaskManagerController {
         @Override
         public void actionPerformed(ActionEvent e) {
             TaskPanel.initializeParemeters();
-
+            Task editTask = new Task();
+            int position = calendarModel.indexOf(task);
             for (int i = 0; i < taskList.size(); i++) {
                 if (taskList.getTask(i).equals(task)) {
 
@@ -178,11 +179,22 @@ public class TaskManagerController {
                         taskList.getTask(i).setTime(TaskPanel.time, TaskPanel.end, TaskPanel.interval);
                     } else
                         taskList.getTask(i).setTime(TaskPanel.time);
+                    editTask = taskList.getTask(i);
+                    model.insertElementAt(editTask, model.indexOf(task));
+                    model.removeElement(task);
+                    if (!editTask.getTime().after(new Date()) || !editTask.getTime().before(new Date(System.currentTimeMillis() + 86400000 * 7)))
+                        calendarModel.removeElement(task);
+                    if (calendarModel.contains(task)) {
+                        calendarModel.insertElementAt(editTask, position);
+                        calendarModel.removeElement(task);
+                    } else if (editTask.getTime().after(new Date()) && editTask.getTime().before(new Date(System.currentTimeMillis() + 86400000 * 7)))
+                        calendarModel.addElement(editTask);
+
                     break;
+
                 }
             }
-            modelCreater();
-            modelCalendarCreater();
+
             mainWindow.repaint();
             logger.warn("task was changed");
         }
@@ -193,19 +205,18 @@ public class TaskManagerController {
         @Override
         public void actionPerformed(ActionEvent e) {
 
+            Task removeTask = task;
+            int sure = JOptionPane.showConfirmDialog(mainWindow, "Are you sure?", "deleting task", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.CLOSED_OPTION);
+            if (sure == JOptionPane.OK_OPTION) {
 
-int sure = JOptionPane.showConfirmDialog(mainWindow,"Are you sure?","deleting task",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.CLOSED_OPTION);
-           if (sure == JOptionPane.OK_OPTION) {
-               if (taskList.size()>= 0) {
-                   if (taskList.remove(task)) {
-                       model.removeElement(task);
-                       calendarModel.removeElement(task);
-                       logger.warn("task removed");
-                   }
-                   mainWindow.repaint();
-                   mainWindow.revalidate();
-               }
-           }
+                taskList.remove(removeTask);
+                model.removeElement(removeTask);
+                calendarModel.removeElement(removeTask);
+                logger.warn("task removed");
+
+                mainWindow.repaint();
+
+            }
         }
     }
 

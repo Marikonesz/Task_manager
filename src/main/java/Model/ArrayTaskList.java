@@ -39,8 +39,10 @@ public class ArrayTaskList extends TaskList {
          //   intermediateArray = null;
         }
         System.out.println(arrayTaskList.length+" " + size);
-
+if(size>0)
         arrayTaskList[size - 1] = task;
+        else
+    arrayTaskList[0] = task;
 
     }
 
@@ -63,35 +65,37 @@ public class ArrayTaskList extends TaskList {
      * @return
      */
     public boolean remove(Task task) {
-        Task[] intermediateArr = new Task[arrayTaskList.length];
-        int startCopy = -1;
-        for (int i = 0; i < size; i++) {
-            if (arrayTaskList[i] != null) {
-                if (!arrayTaskList[i].equals(task)) {
-                    intermediateArr[i] = arrayTaskList[i];
-                    startCopy = i;
-                } else {
-                    startCopy = i;
-                    break;
+        if(size>=0) {
+            Task[] intermediateArr = new Task[arrayTaskList.length];
+            int startCopy = 0;
+            for (int i = 0; i < size; i++) {
+                if (arrayTaskList[i] != null) {
+                    if (!arrayTaskList[i].equals(task)) {
+                        intermediateArr[i] = arrayTaskList[i];
+                        startCopy = i;
+                    } else {
+                        startCopy = i;
+                        break;
 
+                    }
                 }
             }
-        }
-        for (int j = startCopy; j < size; j++) {
-            System.out.println(arrayTaskList.length);
-            intermediateArr[j] = arrayTaskList[j + 1];
-        }
+            for (int j = startCopy; j < size; j++) {
+                System.out.println(arrayTaskList.length);
+                intermediateArr[j] = arrayTaskList[j + 1];
+            }
 
 
-        if (startCopy == -1)
-            return false;
-        else {
-            arrayTaskList = Arrays.copyOf(intermediateArr,intermediateArr.length );
-            intermediateArr = null;
-            size--;
-            return true;
+            if (startCopy == -1)
+                return false;
+            else {
+                arrayTaskList = Arrays.copyOf(intermediateArr, intermediateArr.length);
+                intermediateArr = null;
+                size--;
+                return true;
+            }
         }
-
+        return false;
     }
 
     @Override
