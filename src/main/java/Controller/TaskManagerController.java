@@ -151,20 +151,20 @@ public class TaskManagerController {
                 }
                 if (noContain) {
 
-                    newTask.setActive(TaskPanel.active);
+                    newTask.setActive(onOff);
                     taskList.add(newTask);
                     task = newTask;
                     model.addElement(newTask);
 
 
-                    if (newTask.getTime().getTime() >= new Date(System.currentTimeMillis()).getTime() && newTask.getTime().getTime() <= new Date(System.currentTimeMillis() + 86400000 * 7).getTime()&&newTask.isActive())
+                    if (newTask.getTime().getTime() >= new Date(System.currentTimeMillis()).getTime()- 10000 && newTask.getTime().getTime() <= new Date(System.currentTimeMillis() + 86410000 * 7).getTime() && newTask.isActive())
                         calendarModel.addElement(newTask);
-                    mainWindow.repaint();
+
 
                     logger.warn("new task created");
                 }
             }
-
+            mainWindow.repaint();
         }
 
     }
