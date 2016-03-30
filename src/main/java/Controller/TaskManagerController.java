@@ -157,8 +157,8 @@ public class TaskManagerController {
                     model.addElement(newTask);
 
 
-                    if (newTask.getTime().getTime() >= new Date(System.currentTimeMillis()).getTime()- 10000 && newTask.getTime().getTime() <= new Date(System.currentTimeMillis() + 86410000 * 7).getTime() && newTask.isActive())
-                        calendarModel.addElement(newTask);
+                    if (newTask.nextTimeAfter(new Date()).after(new Date(System.currentTimeMillis() - 10000) )  && newTask.nextTimeAfter(new Date()).before(new Date(System.currentTimeMillis() + 86410000 * 7)) && newTask.isActive())
+                    calendarModel.addElement(newTask);
 
 
                     logger.warn("new task created");
@@ -189,12 +189,12 @@ public class TaskManagerController {
                     editTask = taskList.getTask(i);
                     model.insertElementAt(editTask, model.indexOf(task));
                     model.removeElement(task);
-                    if (!editTask.getTime().after(new Date()) || !editTask.getTime().before(new Date(System.currentTimeMillis() + 86400000 * 7))|| !editTask.isActive())
+                    if (!editTask.nextTimeAfter(new Date()).after(new Date()) || !editTask.nextTimeAfter(new Date()).before(new Date(System.currentTimeMillis() + 86400000 * 7))|| !editTask.isActive())
                         calendarModel.removeElement(task);
                     if (calendarModel.contains(task) && editTask.isActive()) {
                         calendarModel.insertElementAt(editTask, position);
                         calendarModel.removeElement(task);
-                    } else if (editTask.getTime().after(new Date()) && editTask.getTime().before(new Date(System.currentTimeMillis() + 86400000 * 7)) && editTask.isActive())
+                    } else if (editTask.nextTimeAfter(new Date()).after(new Date()) && editTask.nextTimeAfter(new Date()).before(new Date(System.currentTimeMillis() + 86400000 * 7)) && editTask.isActive())
                         calendarModel.addElement(editTask);
 
                     break;
