@@ -101,6 +101,12 @@ public class TaskManagerController {
                         break;
                     }
                 }
+                if(task!=null) {
+                    if (!calendarModel.contains(task) && task.getTime().after(new Date()) && task.getTime().before(new Date(System.currentTimeMillis() + 86400000 * 7)) && task.isActive())
+                        calendarModel.addElement(task);
+                    if (calendarModel.contains(task) && !task.isActive())
+                        calendarModel.removeElement(task);
+                }
             }
 
         }
@@ -144,16 +150,17 @@ public class TaskManagerController {
                     break;
                 }
                 if (noContain) {
-                    taskList.add(newTask);
+
                     newTask.setActive(TaskPanel.active);
+                    taskList.add(newTask);
                     task = newTask;
                     model.addElement(newTask);
 
 
-                    if (newTask.getTime().getTime() >= new Date(System.currentTimeMillis() - 10000).getTime() && newTask.getTime().getTime() <= new Date(System.currentTimeMillis() + 86400000 * 7).getTime())
+                    if (newTask.getTime().getTime() >= new Date(System.currentTimeMillis()).getTime() && newTask.getTime().getTime() <= new Date(System.currentTimeMillis() + 86400000 * 7).getTime()&&newTask.isActive())
                         calendarModel.addElement(newTask);
                     mainWindow.repaint();
-                    mainWindow.revalidate();
+
                     logger.warn("new task created");
                 }
             }
@@ -172,7 +179,7 @@ public class TaskManagerController {
             int position = calendarModel.indexOf(task);
             for (int i = 0; i < taskList.size(); i++) {
                 if (taskList.getTask(i).equals(task)) {
-
+                    TaskPanel.active = onOff;
                     taskList.getTask(i).setTitle(TaskPanel.title);
                     taskList.getTask(i).setActive(TaskPanel.active);
                     if (TaskPanel.interval.toMillis() != 0 && repeatedTask) {
@@ -182,12 +189,12 @@ public class TaskManagerController {
                     editTask = taskList.getTask(i);
                     model.insertElementAt(editTask, model.indexOf(task));
                     model.removeElement(task);
-                    if (!editTask.getTime().after(new Date()) || !editTask.getTime().before(new Date(System.currentTimeMillis() + 86400000 * 7)))
+                    if (!editTask.getTime().after(new Date()) || !editTask.getTime().before(new Date(System.currentTimeMillis() + 86400000 * 7))|| !editTask.isActive())
                         calendarModel.removeElement(task);
-                    if (calendarModel.contains(task)) {
+                    if (calendarModel.contains(task) && editTask.isActive()) {
                         calendarModel.insertElementAt(editTask, position);
                         calendarModel.removeElement(task);
-                    } else if (editTask.getTime().after(new Date()) && editTask.getTime().before(new Date(System.currentTimeMillis() + 86400000 * 7)))
+                    } else if (editTask.getTime().after(new Date()) && editTask.getTime().before(new Date(System.currentTimeMillis() + 86400000 * 7)) && editTask.isActive())
                         calendarModel.addElement(editTask);
 
                     break;
@@ -303,8 +310,11 @@ public class TaskManagerController {
         for (Map.Entry entry : onWeek.entrySet()) {
             HashSet tasksnow = (HashSet) entry.getValue();
             for (Object task : tasksnow) {
-                index++;
-                calendarModel.add(index, (Task) task);
+                Task currentTask = (Task)task;
+                if (currentTask.isActive()) {
+                    index++;
+                    calendarModel.add(index, (Task) task);
+                }
             }
         }
     }
