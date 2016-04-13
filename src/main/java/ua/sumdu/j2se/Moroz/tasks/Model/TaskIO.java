@@ -1,4 +1,4 @@
-package Model;
+package ua.sumdu.j2se.Moroz.tasks.Model;
 
 
 
@@ -10,9 +10,17 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
 
-
+/**
+ * class provides reading tasks from file and writing problems to a file
+ */
 public class TaskIO {
     static Logger logger = Logger.getLogger(TaskIO.class);
+
+    /**
+     *write tasks from list into OutputStream
+     * @param tasks tasks list of tasks for reading
+     * @param out stream for writing
+     */
     static void write(TaskList tasks, OutputStream out) {
 
         DataOutputStream writer = new DataOutputStream(out);
@@ -48,6 +56,11 @@ public class TaskIO {
         }
     }
 
+    /**
+     *read tasks from stream into a list
+     * @param tasks tasks list of tasks for writing
+     * @param in stream for reading
+     */
 
     static void read(TaskList tasks, InputStream in) {
         DataInputStream reader = new DataInputStream(in);
@@ -109,9 +122,13 @@ public class TaskIO {
         }
     }
 
-
+    /**
+     * write all tasks into a file in binary format
+     * @param tasks list of tasks for writing
+     * @param file a file for writing tasks
+     */
     public static void writeBinary(TaskList tasks, File file) {
-        //  String pathFile  =  "C:\\Users\\������\\IdeaProjects\\Tasknetcracker";
+
         try {
             write(tasks, new FileOutputStream(file.getPath()));
 
@@ -121,6 +138,11 @@ public class TaskIO {
 
     }
 
+    /**
+     * read all tasks from a file in binary format
+     * @param tasks  list which records the objectives
+     * @param file a file for reading tasks
+     */
     public static void readBinary(TaskList tasks, File file) {
         try {
             if(!file.exists())
@@ -131,6 +153,11 @@ public class TaskIO {
         }
     }
 
+    /**
+     *write tasks from list into Writer
+     * @param tasks tasks list of tasks for writing
+     * @param out stream for writing
+     */
     public static void write(TaskList tasks, Writer out) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MMMM-DDD H:m:S.s");
         int forLast = 0;
@@ -178,6 +205,11 @@ public class TaskIO {
 
     }
 
+    /**
+     *read tasks from Reader into list of tasks
+     * @param tasks tasks list of tasks for writing
+     * @param in stream for reading
+     */
     public static void read(TaskList tasks, Reader in) {
         BufferedReader reader = new BufferedReader(in);
         try {
@@ -259,7 +291,11 @@ public class TaskIO {
 
 
     }
-
+    /**
+     * read all tasks from a file in text format
+     * @param tasks  list which records the tasks
+     * @param file a file for reading tasks
+     */
     public static void writeText(TaskList tasks, File file) {
         try {
             write(tasks, new FileWriter(file));
@@ -270,7 +306,11 @@ public class TaskIO {
             e.printStackTrace();
         }
     }
-
+    /**
+     * read all tasks from a file in textformat
+     * @param tasks  list which records the objectives
+     * @param file a file for reading tasks
+     */
     public static void readText(TaskList tasks, File file) {
         try {
             read(tasks, new FileReader(file.getPath()));
@@ -279,6 +319,11 @@ public class TaskIO {
         }
     }
 
+    /**
+     * format date into user frienly format
+     * @param date
+     * @return
+     */
     static String dateparser(Date date) {
         long miliseconds = date.getTime();
         long days = miliseconds / 86400000;

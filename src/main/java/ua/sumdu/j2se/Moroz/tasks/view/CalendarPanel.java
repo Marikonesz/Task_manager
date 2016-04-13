@@ -1,14 +1,18 @@
-package view;
+package ua.sumdu.j2se.Moroz.tasks.view;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by васыль on 05.02.2016.
+ * Create a panel to display list of  tasks on week
  */
 public class CalendarPanel extends JPanel  {
     public static JList CalendarList;
 
+    /**
+     * Create an instance of panel to display list of all tasks
+     * @param model the model to build the list
+     */
     public CalendarPanel(DefaultListModel model) {
 
         CalendarList = new JList(model);

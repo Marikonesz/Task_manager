@@ -1,39 +1,43 @@
-package Model;
+package ua.sumdu.j2se.Moroz.tasks.Model;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Iterator;
 
 /**
- * Created by васыль on 31.10.2015.
+ * class describes a list of tasks
  */
 public abstract class TaskList implements Iterable<Task>, Cloneable, Serializable {
+    /**
+     * count of size
+     * @return count of size
+     */
     abstract public int size();
 
+    /**
+     *
+     * @param index task in task list
+     * @return task from task list
+     */
     public abstract Task getTask(int index);
+
+    /**
+     * delete Task from the list
+     * @param task task for remoove
+     * @return true when task was deleting susesfuly
+     */
 
     public abstract boolean remove(Task task);
 
+    /**
+     * add new task into task list
+     * @param task new task
+     */
     public abstract void add(Task task);
 
-    public Task[] incoming(Date from, Date to) {
-        int incomingSize = 0;
-        for (int i = 0; i < size(); i++) {
-            if (getTask(i).nextTimeAfter(from).getTime() != -1 && getTask(i).nextTimeAfter(from).getTime() <= to.getTime()) {
-                incomingSize++;
-            }
-        }
-        Task[] tasks = new Task[incomingSize];
-        incomingSize = 0;
-        for (int i = 0; i < size(); i++) {
-            if (getTask(i).nextTimeAfter(from).getTime() != -1 && getTask(i).nextTimeAfter(from).getTime() <= to.getTime()) {
-                tasks[incomingSize] = getTask(i);
-                incomingSize++;
-            }
-        }
-        return tasks;
-    }
-
+    /**
+     *
+     * @return default iterator for task list
+     */
     public Iterator iterator() {
         return new Iterator() {
             private int cursor;

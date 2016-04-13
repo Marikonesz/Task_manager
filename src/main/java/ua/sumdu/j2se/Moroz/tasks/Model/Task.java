@@ -1,4 +1,4 @@
-package Model;
+package ua.sumdu.j2se.Moroz.tasks.Model;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -6,16 +6,41 @@ import java.util.Date;
 
 
 /**
- * Created by васыль on 23.09.2015.
+ * class the class describes an object "Task"
  */
 public class Task implements Cloneable, Serializable {
+    /**
+     * task description
+     */
     private String title;
+    /**
+     * date of start repeated task
+     */
     private Date start;
+    /**
+     * date of end repeated task
+     */
     private Date end;
+    /**
+     * interval of repeated task
+     */
     private Duration interval;
+    /**
+     * active task
+     */
     private boolean active;
+    /**
+     * date of start unrepeated task
+     */
     private Date time;
 
+    /**
+     * the constructor creates an object of a recurring task
+     * @param title
+     * @param start
+     * @param end
+     * @param interval
+     */
     public Task(String title, Date start, Date end, Duration interval) {
         this.title = title;
         this.start = start;
@@ -23,11 +48,12 @@ public class Task implements Cloneable, Serializable {
         this.end = end;
         this.interval = interval;
         this.time = new Date(0);
-//        if (start.getTime() < 0 && end.getTime() < 0 || end.getTime() < start.getTime() || interval.isZero()) {
-//            throw new IllegalArgumentException("Arguments can't have negative values,the interval must be greater than zero ");
+
         }
 
-
+    /**
+     * the constructor creates an object of a empty task
+     */
     public Task() {
         this.title = "";
         this.time = new Date();
@@ -36,6 +62,11 @@ public class Task implements Cloneable, Serializable {
         this.interval = Duration.ofMillis(0);
     }
 
+    /**
+     * the constructor creates an object of a non-recurring task
+     * @param title
+     * @param time
+     */
     public Task(String title, Date time) {
 
         this.title = title;
@@ -124,6 +155,11 @@ public class Task implements Cloneable, Serializable {
 
     }
 
+    /**
+     * calculates the nearest beginning of task execution time from the specified
+     * @param current start time
+     * @return nearest beginning of task execution time from the specified
+     */
     public Date nextTimeAfter(Date current) {
         // if (active) {
         long startAfterCurrent = -1;
@@ -175,6 +211,7 @@ public class Task implements Cloneable, Serializable {
         return !(time != null ? !time.equals(task.time) : task.time != null);
 
     }
+
 
     @Override
     public int hashCode() {

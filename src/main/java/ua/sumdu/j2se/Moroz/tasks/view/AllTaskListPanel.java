@@ -1,4 +1,4 @@
-package view;
+package ua.sumdu.j2se.Moroz.tasks.view;
 
 
 
@@ -10,11 +10,15 @@ import java.awt.*;
 
 
 /**
- * Created by васыль on 05.02.2016.
+ * Create a panel to display list of all tasks
  */
 public class AllTaskListPanel extends JPanel  {
     public static JList allTasksList;
 
+    /**
+     * Create an instance of panel to display list of all tasks
+     * @param model the model to build the list
+     */
     public AllTaskListPanel(DefaultListModel model) {
 
 

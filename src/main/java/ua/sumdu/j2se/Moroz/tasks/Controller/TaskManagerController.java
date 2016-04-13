@@ -1,9 +1,9 @@
-package Controller;
+package ua.sumdu.j2se.Moroz.tasks.Controller;
 
 
-import Model.*;
+import ua.sumdu.j2se.Moroz.tasks.Model.*;
 import org.apache.log4j.Logger;
-import view.*;
+import ua.sumdu.j2se.Moroz.tasks.view.*;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -13,20 +13,52 @@ import java.io.File;
 import java.util.*;
 
 /**
- * Created by васыль on 02.02.2016.
+ * the class reads the tasks from a file,the entry in the tasks file,adding,deleting and modifying tasks
+ *
+ * @param
  */
 
 public class TaskManagerController {
+    /**
+     * connect a logging system to the class
+     */
     final static Logger logger = Logger.getLogger(TaskManagerController.class);
-
+    /**
+     * initialize frame
+     */
     public static TaskManagerJFrame mainWindow;
+    /**
+     * the display panel of the selected task
+     */
     public static TaskPanel taskPanel;
+    /**
+     * the working collection to work with tasks
+     */
+
     public static TaskList taskList = new ArrayTaskList();
+    /**
+     * the working collection to work with tasks that are scheduled for the coming week
+     */
     public static SortedMap<Date, Set<Task>> onWeek = new TreeMap();
+    /**
+     * object Task to work with current task
+     */
     public static Task task;
+    /**
+     * indicates whether the task is repeatable
+     */
     public static boolean repeatedTask;
+    /**
+     * indicates whether the task is active
+     */
     public static boolean onOff;
+    /**
+     * the model to display the list of tasks
+     */
     public static DefaultListModel<Task> model;
+    /**
+     * the model to display the list of tasks on week
+     */
     public static DefaultListModel<Task> calendarModel;
 
 
@@ -53,7 +85,9 @@ public class TaskManagerController {
     }
 
     public class TaskListSelectionListener implements ListSelectionListener {
-
+        /**
+         * method handles the selection of a task from the list
+         */
         @Override
         public void valueChanged(ListSelectionEvent e) {
 
@@ -68,13 +102,19 @@ public class TaskManagerController {
     }
 
     public class CalendarSelectionListener implements ListSelectionListener {
-
+        /**
+         * method handles the selection of a task from the list on week
+         */
         @Override
         public void valueChanged(ListSelectionEvent e) {
+
             task = (Task) CalendarPanel.CalendarList.getSelectedValue();
-            MainPanel.setFistList(true);
-            taskPanel.writeParameters(task);
-            MainPanel.setFistList(false);
+            if (task != null) {
+                repeatedTask = task.isRepeated();
+                onOff = task.isActive();
+                taskPanel.writeParameters(task);
+            }
+
         }
     }
 
@@ -82,6 +122,11 @@ public class TaskManagerController {
 
         int selected;
 
+        /**
+         * method handles the change of the parameter "active"
+         *
+         * @param e
+         */
         @Override
         public void itemStateChanged(ItemEvent e) {
             selected = e.getStateChange();
@@ -101,7 +146,7 @@ public class TaskManagerController {
                         break;
                     }
                 }
-                if(task!=null) {
+                if (task != null) {
                     if (!calendarModel.contains(task) && task.getTime().after(new Date()) && task.getTime().before(new Date(System.currentTimeMillis() + 86400000 * 7)) && task.isActive())
                         calendarModel.addElement(task);
                     if (calendarModel.contains(task) && !task.isActive())
@@ -115,6 +160,10 @@ public class TaskManagerController {
     public class TaskRepeatedListener implements ItemListener {
 
         int selected;
+
+        /**
+         * method handles the change of the parameter "repeated"
+         */
 
         @Override
         public void itemStateChanged(ItemEvent e) {
@@ -133,7 +182,11 @@ public class TaskManagerController {
     }
 
     public class CreateTaskListener implements ActionListener {
-
+        /**
+         * method create a new task
+         *
+         * @param e
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             TaskPanel.initializeParemeters();
@@ -157,8 +210,8 @@ public class TaskManagerController {
                     model.addElement(newTask);
 
 
-                    if (newTask.nextTimeAfter(new Date()).after(new Date(System.currentTimeMillis() - 10000) )  && newTask.nextTimeAfter(new Date()).before(new Date(System.currentTimeMillis() + 86410000 * 7)) && newTask.isActive())
-                    calendarModel.addElement(newTask);
+                    if (newTask.nextTimeAfter(new Date()).after(new Date(System.currentTimeMillis() - 10000)) && newTask.nextTimeAfter(new Date()).before(new Date(System.currentTimeMillis() + 86410000 * 7)) && newTask.isActive())
+                        calendarModel.addElement(newTask);
 
 
                     logger.warn("new task created");
@@ -171,7 +224,11 @@ public class TaskManagerController {
 
     public class ChangeTaskButtonListener implements ActionListener {
 
-
+        /**
+         * method change selected task
+         *
+         * @param e
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             TaskPanel.initializeParemeters();
@@ -189,7 +246,7 @@ public class TaskManagerController {
                     editTask = taskList.getTask(i);
                     model.insertElementAt(editTask, model.indexOf(task));
                     model.removeElement(task);
-                    if (!editTask.nextTimeAfter(new Date()).after(new Date()) || !editTask.nextTimeAfter(new Date()).before(new Date(System.currentTimeMillis() + 86400000 * 7))|| !editTask.isActive())
+                    if (!editTask.nextTimeAfter(new Date()).after(new Date()) || !editTask.nextTimeAfter(new Date()).before(new Date(System.currentTimeMillis() + 86400000 * 7)) || !editTask.isActive())
                         calendarModel.removeElement(task);
                     if (calendarModel.contains(task) && editTask.isActive()) {
                         calendarModel.insertElementAt(editTask, position);
@@ -208,7 +265,11 @@ public class TaskManagerController {
     }
 
     public class RemoveTaskButtonListener implements ActionListener {
-
+        /**
+         * method delete selected task
+         *
+         * @param e
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -227,7 +288,11 @@ public class TaskManagerController {
         }
     }
 
-
+    /**
+     * the variable task index in the list
+     *
+     * @return index of the task
+     */
     private int getTaskChangedIndex() {
         int indexChangedTask = 0;
         for (int i = 0; i < taskList.size(); i++) {
@@ -247,6 +312,11 @@ public class TaskManagerController {
         public void windowOpened(WindowEvent e) {
         }
 
+        /**
+         * method finish executing programm and write all tasks into file
+         *
+         * @param e
+         */
         @Override
         public void windowClosing(WindowEvent e) {
 
@@ -290,6 +360,9 @@ public class TaskManagerController {
             taskList.getTask(this.getTaskChangedIndex()).setActive(active);
     }
 
+    /**
+     * create a new model for displaying a list of all tasks
+     */
     private static void modelCreater() {
         model = new DefaultListModel();
 
@@ -300,6 +373,9 @@ public class TaskManagerController {
         }
     }
 
+    /**
+     * create a new model for displaying a list of tasks on week
+     */
     private static void modelCalendarCreater() {
         calendarModel = new DefaultListModel<>();
         Date from = new Date();
@@ -310,7 +386,7 @@ public class TaskManagerController {
         for (Map.Entry entry : onWeek.entrySet()) {
             HashSet tasksnow = (HashSet) entry.getValue();
             for (Object task : tasksnow) {
-                Task currentTask = (Task)task;
+                Task currentTask = (Task) task;
                 if (currentTask.isActive()) {
                     index++;
                     calendarModel.add(index, (Task) task);

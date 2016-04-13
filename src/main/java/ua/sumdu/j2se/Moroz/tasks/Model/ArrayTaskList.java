@@ -1,10 +1,10 @@
-package Model;
+package ua.sumdu.j2se.Moroz.tasks.Model;
 
-import java.util.ArrayList;
+
 import java.util.Arrays;
 
 /**
- * Created by васыль on 26.09.2015.
+ * the class implements a task list based on the array
  */
 public class ArrayTaskList extends TaskList {
     /**
@@ -97,6 +97,7 @@ if(size>0)
         }
         return false;
     }
+
 
     @Override
     public boolean equals(Object o) {

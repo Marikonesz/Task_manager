@@ -1,34 +1,36 @@
-package Controller;
+package ua.sumdu.j2se.Moroz.tasks.Controller;
 
 
-import Model.ArrayTaskList;
-import Model.Task;
-import Model.TaskIO;
+import ua.sumdu.j2se.Moroz.tasks.Model.ArrayTaskList;
+import ua.sumdu.j2se.Moroz.tasks.Model.Task;
 import org.apache.log4j.Logger;
-import view.MainPanel;
+import ua.sumdu.j2se.Moroz.tasks.view.MainPanel;
 
-import java.io.File;
 import java.util.Date;
 
 
 /**
- * Created by васыль on 21.02.2016.
+ * the class implements a notification indicating that the beginning of the task after 1 minute
  */
 public class NotifyController extends Thread {
     final static Logger logger = Logger.getLogger(NotifyController.class);
     ArrayTaskList list = new ArrayTaskList();
 
+    /**
+     * method every minute checks all tasks.if prior to the completion of a task less than 1 minute zapisyvaet task
+     * in text field notify text
+     */
 
     @Override
     public void run() {
         logger.warn("notify system started");
         Date date;
         while (true) {
-          //  TaskIO.readBinary(list, new File("filetasks"));
+            //  TaskIO.readBinary(list, new File("filetasks"));
             list = (ArrayTaskList) TaskManagerController.taskList;
             date = new Date();
             for (Task task : list) {
-                if (task.nextTimeAfter(date).before(new Date(date.getTime() + 300000)) && task.nextTimeAfter(date).after(date)) {
+                if (task.nextTimeAfter(date).before(new Date(date.getTime() + 60000)) && task.nextTimeAfter(date).after(date)) {
                     MainPanel.notifyText(task.toString());
                     System.out.println(task);
                     break;
@@ -38,7 +40,7 @@ public class NotifyController extends Thread {
             try {
                 sleep(60000);
             } catch (InterruptedException e) {
-               logger.error("InterruptedException in notify system");
+                logger.error("InterruptedException in notify system");
             }
 
 

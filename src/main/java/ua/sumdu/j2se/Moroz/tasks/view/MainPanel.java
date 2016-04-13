@@ -1,19 +1,17 @@
-package view;
+package ua.sumdu.j2se.Moroz.tasks.view;
 
-import Controller.TaskManagerController;
-import Model.Task;
+import ua.sumdu.j2se.Moroz.tasks.Controller.TaskManagerController;
+
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.Duration;
-import java.util.Date;
 
-
+/**
+ * the main panel of the application contains all of the elements of the user interface
+ */
 public class MainPanel extends JPanel  {
+
     private JTabbedPane tasksLists = new JTabbedPane();
-
-
-    private static boolean fistList;
     JPanel serviseTaskPanel = new JPanel();
     private JPanel panellists = new JPanel();
     private JPanel buttonsPanel = new JPanel();
@@ -25,6 +23,9 @@ public class MainPanel extends JPanel  {
 
     private JPanel taskParametres = TaskManagerController.taskPanel;
 
+    /**
+     * create an instance of MainPanel with all elements of user interface
+     */
     public MainPanel() {
 
         deleteTaskButton.addActionListener(TaskManagerJFrame.controller.new RemoveTaskButtonListener());
@@ -41,8 +42,6 @@ public class MainPanel extends JPanel  {
         this.setSize(400, 600);
         tasksLists.addTab("All Tasks", new AllTaskListPanel(TaskManagerController.model));
         tasksLists.addTab("on week", new CalendarPanel(TaskManagerController.calendarModel));
-        if (fistList)
-            tasksLists.setSelectedIndex(1);
         serviseTaskPanel.setLayout(new GridLayout(3, 1));
         serviseTaskPanel.add(buttonsPanel);
         serviseTaskPanel.add(taskParametres);
@@ -53,10 +52,10 @@ public class MainPanel extends JPanel  {
 
     }
 
-    public static void setFistList(boolean fistList) {
-        MainPanel.fistList = fistList;
-    }
-
+    /**
+     * set text into notify field
+     * @param text text to write into notify field
+     */
     public static void notifyText(String text) {
         notifyField.setText(text);
 

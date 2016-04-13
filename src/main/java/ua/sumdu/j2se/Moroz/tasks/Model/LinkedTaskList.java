@@ -1,4 +1,4 @@
-package Model;
+package ua.sumdu.j2se.Moroz.tasks.Model;
 
 
 import java.util.Iterator;
@@ -90,6 +90,10 @@ public class LinkedTaskList extends TaskList {
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int size() {
         return size;
@@ -151,18 +155,7 @@ public class LinkedTaskList extends TaskList {
             }
         };
     }
-//    LinkedTaskList incoming(int from, int to){
-//        LinkedTaskList incoming = new LinkedTaskList();
-//        current = first;
-//        for (int i = 0; i < size ; i++) {
-//           // if (current.getTask() !=null && current.getTask().getStart() >= from && (current.getTask().getStart() <= to)) {
-//           if (current.getTask().nextTimeAfter(from) != -1 && current.getTask().nextTimeAfter(from) <= to){
-//                incoming.add(current.getTask());
-//            }
-//            current = current.nextLink;
-//        }
-//       return incoming;
-//    }
+
 
     @Override
     public boolean equals(Object o) {

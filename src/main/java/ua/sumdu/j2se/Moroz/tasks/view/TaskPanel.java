@@ -1,7 +1,7 @@
-package view;
+package ua.sumdu.j2se.Moroz.tasks.view;
 
-import Controller.TaskManagerController;
-import Model.Task;
+import ua.sumdu.j2se.Moroz.tasks.Controller.TaskManagerController;
+import ua.sumdu.j2se.Moroz.tasks.Model.Task;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -9,7 +9,9 @@ import java.awt.*;
 import java.time.Duration;
 import java.util.Date;
 
-
+/**
+ * panel to display task parameters
+ */
 public class TaskPanel extends JPanel  {
 
     private JLabel lableTitleTask;
@@ -32,6 +34,10 @@ public class TaskPanel extends JPanel  {
     private static boolean onOff;
     private static boolean repeated;
 
+    /**
+     * create an instance of TaskPanel
+     * @param task task to display
+     */
     public TaskPanel(Task task) {
         this.setSize(200, 600);
         this.setLayout(new GridLayout(5, 2, 0, 0));
@@ -75,6 +81,9 @@ public class TaskPanel extends JPanel  {
 
     }
 
+    /**initialize public fields for create and edit tasks
+     *
+      */
     public static void initializeParemeters() {
 
         title = fieldTitleTask.getText();
@@ -85,6 +94,10 @@ public class TaskPanel extends JPanel  {
 
     }
 
+    /**
+     * edit parameters with new task
+     * @param task task to display
+     */
     public void writeParameters(Task task) {
         if (task != null) {
             onOff = TaskManagerController.onOff;
